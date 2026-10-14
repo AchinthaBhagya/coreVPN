@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum RoleType {
+  OWNER
+  ADMIN
+  PROJECT_MANAGER
+  DEVELOPER
+  DESIGNER
+  CREATIVE
+  FINANCE_MANAGER
+  SUPPORT_AGENT
+  CLIENT
+  CUSTOM
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  firstName String
+  lastName  String
+  phone     String?
+  avatar    String?
+  status    UserStatus @default(PENDING)
+  lastLogin DateTime?
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+
+  userRoles     UserRole[]
+  sessions      Session[]
+  auditLogs     AuditLog[]
+  createdBy     User?       @relation("UserCreated", fields: [createdById], references: [id])
+  createdById   String?
+  usersCreated  User[]      @relation("UserCreated")
+  client        Client?
+  assignedLeads Lead[]      @relation("LeadAssigned")
+  projectMembers ProjectMember[]
+  timeEntries   TimeEntry[]
+  tickets       Ticket[]    @relation("TicketAssigned")
+  notifications Notification[]
+  activities    ActivityLog[]
+
+  @@index([email])
+  @@index([status])
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  type        RoleType @default(CUSTOM)
+  isSystem    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userRoles      UserRole[]
+  rolePermissions RolePermission[]
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  module      String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rolePermissions RolePermission[]
+}
+
+model UserRole {
+  id     String @id @default(cuid())
+  userId String
+  roleId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+}
+
+model RolePermission {
+  id           String @id @default(cuid())
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique @db.VarChar(500)
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?  @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  module    String
+  entityId  String?
+  ipAddress String?
+  userAgent String?  @db.Text
+  details   Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([module])
+  @@index([createdAt])
+}

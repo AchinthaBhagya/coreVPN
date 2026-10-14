@@ -1,0 +1,61 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+out
+.next
+.vercel
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+coverage
+.nyc_output
+
+# Uploads
+uploads
+storage
+
+# Prisma
+prisma/*.db
+prisma/migrations/migration_lock.toml
+
+# PM2
+ecosystem.config.js.bak
+
+# Deployment
+*.pem
+*.key
