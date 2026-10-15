@@ -52,12 +52,16 @@ mysqldump \
 
 # Fail loudly rather than shipping an empty backup: a dump that does not
 # contain a single table definition is useless for recovery.
-if ! gunzip -c "$BACKUP_DIR/3xcode-db-$STAMP.sql.gz" | grep -q 'CREATE TABLE'; then
+# Note: use `grep -c`, never `grep -q`. `grep -q` exits on the first match,
+# which sends SIGPIPE to gunzip; with `set -o pipefail` that makes the whole
+# pipeline report failure and would delete a perfectly valid dump.
+TABLE_COUNT="$(gunzip -c "$BACKUP_DIR/3xcode-db-$STAMP.sql.gz" | grep -c 'CREATE TABLE' || true)"
+if [ "${TABLE_COUNT:-0}" -lt 1 ]; then
   echo "Backup FAILED: $BACKUP_DIR/3xcode-db-$STAMP.sql.gz contains no tables" >&2
   rm -f "$BACKUP_DIR/3xcode-db-$STAMP.sql.gz"
   exit 1
 fi
-echo "==> Verified dump contains table definitions"
+echo "==> Verified dump contains $TABLE_COUNT table definitions"
 
 UPLOAD_DIR="$(grep -E '^UPLOAD_DIR=' "$ENV_FILE" | head -n1 | cut -d= -f2- | tr -d '"'"'"'')"
 UPLOAD_DIR="${UPLOAD_DIR:-./uploads}"
