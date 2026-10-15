@@ -170,7 +170,7 @@ export class DiscordService {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: sanitizeDiscordContent(`3xCode test webhook for event \`${event}\` - connectivity confirmed.`),
+          content: sanitizeDiscordContent(`3xCodz test webhook for event \`${event}\` - connectivity confirmed.`),
         }),
       });
       if (response.ok || response.status === 204) return { ok: true, status: response.status };

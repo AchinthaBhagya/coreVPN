@@ -195,7 +195,7 @@ export default function IntegrationsSettings() {
 
   const smtpTestMutation = useApiMutation((vars: { to: string }) =>
     api.post<{ ok: boolean }>("/integrations/smtp/test", vars),
-    { onSuccess: () => toastSuccess("Test email sent", "Check the inbox for the 3xCode SMTP test message.") },
+    { onSuccess: () => toastSuccess("Test email sent", "Check the inbox for the 3xCodz SMTP test message.") },
   );
 
   const discordData = discordQuery.data;
@@ -587,7 +587,7 @@ export default function IntegrationsSettings() {
                     </Button>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Uses the from address above and the subject "3xCode SMTP test".{" "}
+                    Uses the from address above and the subject "3xCodz SMTP test".{" "}
                     {smtpData.from || user?.email ? `Defaults to ${smtpData.from || user?.email}.` : null}
                   </p>
                 </div>

@@ -125,7 +125,7 @@ export default function PortalProjects() {
     <div className="space-y-6">
       <PageHeader
         title="Your projects"
-        description="Everything 3xCode is delivering for you — status, progress and deadlines at a glance. This list is read-only; contact us to request a change."
+        description="Everything 3xCodz is delivering for you — status, progress and deadlines at a glance. This list is read-only; contact us to request a change."
       />
 
       <FilterBar>

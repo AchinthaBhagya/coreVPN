@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -----------------------------------------------------------------------------
-# 3xCode Management System - backup (databases + uploaded files)
+# 3xCodz Management System - backup (databases + uploaded files)
 #
 #   sudo ./deployment/scripts/backup.sh [output-dir]
 #

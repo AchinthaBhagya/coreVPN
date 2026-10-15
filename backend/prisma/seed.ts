@@ -118,7 +118,7 @@ async function seedDemoData() {
   const company = await prisma.companySetting.upsert({
     where: { id: 'default' },
     update: {},
-    create: { id: 'default', companyName: '3xCode', currency: 'LKR' },
+    create: { id: 'default', companyName: '3xCodz', currency: 'LKR' },
   });
 
   const categories = ['Software', 'Hosting', 'Marketing', 'Design', 'Travel', 'Equipment'];
@@ -148,7 +148,7 @@ async function seedDemoData() {
 }
 
 async function main() {
-  console.log('Seeding 3xCode management system...\n[permissions]');
+  console.log('Seeding 3xCodz management system...\n[permissions]');
   await seedPermissions();
 
   console.log('[roles]');
@@ -168,7 +168,7 @@ async function main() {
   await prisma.companySetting.upsert({
     where: { id: 'default' },
     update: {},
-    create: { id: 'default', companyName: '3xCode', currency: 'LKR' },
+    create: { id: 'default', companyName: '3xCodz', currency: 'LKR' },
   });
 
   console.log('\nSeeding complete.');

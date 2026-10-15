@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronsLeft, Sparkles } from "lucide-react";
+import { ChevronsLeft } from "lucide-react";
 import { NAV_GROUPS, PORTAL_NAV } from "@/lib/nav";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
@@ -35,13 +35,13 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
         )}
       >
         <div className={cn("flex h-16 items-center gap-2 border-b border-white/10 px-4", compact && "justify-center px-0")}>
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-violet-600 shadow-lg shadow-sky-500/20">
-            <Sparkles className="h-5 w-5 text-white" />
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-[#0f0f0f] ring-1 ring-white/10">
+            <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
           </div>
           {!compact ? (
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight">
-                3xCode<span className="text-muted-foreground"> Management</span>
+                3xCodz<span className="text-muted-foreground"> Management</span>
               </p>
               <p className="truncate text-[11px] text-muted-foreground">{isClient ? "Client portal" : "Business suite"}</p>
             </div>

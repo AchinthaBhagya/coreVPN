@@ -24,7 +24,7 @@ portalRouter.use(authenticate, requireClientAccount());
 async function getCompanyProfile() {
   const settings = await prisma.companySetting.findUnique({ where: { id: 'default' } });
   return {
-    name: settings?.companyName ?? '3xCode',
+    name: settings?.companyName ?? '3xCodz',
     legalName: settings?.legalName ?? null,
     address: settings?.address ?? null,
     email: settings?.email ?? null,

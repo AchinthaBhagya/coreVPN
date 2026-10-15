@@ -320,7 +320,7 @@ export default function CompanySettings() {
               name="companyName"
               label="Trading name"
               required
-              placeholder="3xCode"
+              placeholder="3xCodz"
               disabled={!canEdit}
             />
             <TextField

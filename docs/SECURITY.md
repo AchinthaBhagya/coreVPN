@@ -1,6 +1,6 @@
 # Security Model
 
-How 3xCode Management System enforces security, and what an operator must know.
+How 3xCodz Management System enforces security, and what an operator must know.
 
 ## 1. Core principle: the server decides
 

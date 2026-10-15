@@ -144,7 +144,7 @@ export default function PortalInvoiceDetail() {
 
           <SectionCard
             title="Payment history"
-            description="Payments recorded against this invoice by 3xCode."
+            description="Payments recorded against this invoice by 3xCodz."
             empty={(invoice.payments?.length ?? 0) === 0}
             emptyTitle="No payments yet"
             emptyDescription="Once a payment is recorded it will appear here."
@@ -257,7 +257,7 @@ export default function PortalInvoiceDetail() {
                 <p>
                   {invoice.notes
                     ? "Settle this invoice using the notes above, then share the payment reference through a support ticket so it can be matched to your account."
-                    : "This invoice can't be paid online from the portal. Please contact 3xCode to arrange payment and share the payment reference through a support ticket."}
+                    : "This invoice can't be paid online from the portal. Please contact 3xCodz to arrange payment and share the payment reference through a support ticket."}
                 </p>
               </AlertDescription>
             </Alert>

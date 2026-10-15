@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -----------------------------------------------------------------------------
-# 3xCode Management System - restore from backup
+# 3xCodz Management System - restore from backup
 #
 #   sudo ./deployment/scripts/restore.sh 3xcode-db-<stamp>.sql.gz [3xcode-uploads-<stamp>.tar.gz]
 #

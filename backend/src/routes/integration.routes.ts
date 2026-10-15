@@ -277,8 +277,8 @@ integrationsRouter.post(
     const { to } = req.body as z.infer<typeof smtpTestSchema>;
     const ok = await sendMail({
       to,
-      subject: '3xCode SMTP test',
-      html: '<p>This is a test email from your 3xCode management system. If you received it, SMTP is configured correctly.</p>',
+      subject: '3xCodz SMTP test',
+      html: '<p>This is a test email from your 3xCodz management system. If you received it, SMTP is configured correctly.</p>',
     });
     await writeAudit(req, { action: 'integration.smtp.test', module: 'settings', details: { ok } });
     if (!ok) {

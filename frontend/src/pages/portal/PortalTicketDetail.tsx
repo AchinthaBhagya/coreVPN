@@ -160,7 +160,7 @@ export default function PortalTicketDetail() {
 
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <SectionCard title="Conversation" description="Messages exchanged with the 3xCode team.">
+          <SectionCard title="Conversation" description="Messages exchanged with the 3xCodz team.">
             <div className="space-y-4">
               <MessageBubble
                 body={ticket.description}
@@ -180,7 +180,7 @@ export default function PortalTicketDetail() {
                     <MessageBubble
                       key={message.id}
                       body={message.body}
-                      authorLabel={isMine ? "You" : author || "3xCode team"}
+                      authorLabel={isMine ? "You" : author || "3xCodz team"}
                       createdAt={message.createdAt}
                       isClient={isMine}
                     />

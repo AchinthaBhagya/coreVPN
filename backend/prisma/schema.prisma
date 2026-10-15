@@ -1,4 +1,4 @@
-// 3xCode Management System - Prisma schema
+// 3xCodz Management System - Prisma schema
 // Datasource: MySQL (DECIMAL used for all monetary values)
 
 generator client {
@@ -1318,7 +1318,7 @@ model ActivityLog {
 
 model CompanySetting {
   id                    String   @id @default("default")
-  companyName           String   @default("3xCode")
+  companyName           String   @default("3xCodz")
   legalName             String?
   email                 String?
   phone                 String?

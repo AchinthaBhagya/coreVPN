@@ -72,21 +72,21 @@ export async function sendMail(payload: MailPayload): Promise<boolean> {
 
 export function resetPasswordEmail(name: string, link: string) {
   return {
-    subject: '3xCode - Reset your password',
-    html: `<p>Hi ${escapeHtml(name)},</p><p>Use the link below to reset your 3xCode password. It expires in 60 minutes.</p><p><a href="${link}">Reset password</a></p><p>If you did not request this, you can ignore this email.</p>`,
+    subject: '3xCodz - Reset your password',
+    html: `<p>Hi ${escapeHtml(name)},</p><p>Use the link below to reset your 3xCodz password. It expires in 60 minutes.</p><p><a href="${link}">Reset password</a></p><p>If you did not request this, you can ignore this email.</p>`,
   };
 }
 
 export function invoiceEmail(invoiceNo: string, clientName: string, total: string, dueDate: string) {
   return {
-    subject: `Invoice ${invoiceNo} from 3xCode`,
+    subject: `Invoice ${invoiceNo} from 3xCodz`,
     html: `<p>Hello ${escapeHtml(clientName)},</p><p>Invoice <strong>${escapeHtml(invoiceNo)}</strong> for <strong>${escapeHtml(total)}</strong> has been issued and is due on ${escapeHtml(dueDate)}.</p><p>You can view and download it from your client portal.</p>`,
   };
 }
 
 export function quotationEmail(quotationNo: string, clientName: string, total: string) {
   return {
-    subject: `Quotation ${quotationNo} from 3xCode`,
+    subject: `Quotation ${quotationNo} from 3xCodz`,
     html: `<p>Hello ${escapeHtml(clientName)},</p><p>Quotation <strong>${escapeHtml(quotationNo)}</strong> for <strong>${escapeHtml(total)}</strong> is ready for your review in the client portal.</p>`,
   };
 }

@@ -127,7 +127,7 @@ function ProfileDetailsCard({
           </div>
         ) : (
           <p className="text-xs text-muted-foreground">
-            You don't have permission to edit your contact details. Please reach out to 3xCode instead.
+            You don't have permission to edit your contact details. Please reach out to 3xCodz instead.
           </p>
         )}
       </form>
@@ -239,7 +239,7 @@ export default function PortalProfilePage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <SectionCard
           title="Company & billing"
-          description="3xCode details shown on your invoices and official correspondence."
+          description="3xCodz details shown on your invoices and official correspondence."
           actions={<Building2 className="h-4 w-4 text-muted-foreground" />}
         >
           {companyQuery.isLoading ? (

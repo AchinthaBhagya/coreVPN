@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { Loader2, Lock, Mail, Sparkles } from "lucide-react";
+import { Loader2, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -89,11 +89,11 @@ export default function Login() {
       <div className="relative grid w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl backdrop-blur-2xl lg:grid-cols-2">
         <div className="hidden flex-col justify-between gap-8 border-r border-white/10 bg-gradient-to-br from-sky-500/10 via-transparent to-violet-600/10 p-10 lg:flex">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 shadow-lg shadow-sky-500/30">
-              <Sparkles className="h-6 w-6 text-white" />
+            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-white/10">
+              <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
             </div>
             <div>
-              <p className="text-lg font-semibold tracking-tight">3xCode</p>
+              <p className="text-lg font-semibold tracking-tight">3xCodz</p>
               <p className="text-xs text-muted-foreground">Management System</p>
             </div>
           </div>

@@ -1,5 +1,5 @@
 /**
- * Typed fetch client for the 3xCode API.
+ * Typed fetch client for the 3xCodz API.
  *
  * - Sends the HTTP-only session cookie (`sid`) on every request.
  * - Echoes the readable `csrf` cookie back as `X-CSRF-Token` for state changes.

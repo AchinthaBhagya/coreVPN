@@ -8,7 +8,7 @@ async function main() {
   const app = createApp();
 
   const server = app.listen(env.port, () => {
-    logger.info(`3xCode API listening on port ${env.port}`, { env: env.nodeEnv });
+    logger.info(`3xCodz API listening on port ${env.port}`, { env: env.nodeEnv });
   });
 
   // Background jobs (invoice overdue scans, reminders, cleanup, Discord retries).

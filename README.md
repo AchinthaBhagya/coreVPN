@@ -1,4 +1,4 @@
-# 3xCode Management System
+# 3xCodz Management System
 
 A production-oriented business management platform for a software / digital
 services company: CRM, quotations, orders, projects, tasks, time tracking,

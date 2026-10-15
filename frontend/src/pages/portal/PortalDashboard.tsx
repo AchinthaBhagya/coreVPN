@@ -150,7 +150,7 @@ export default function PortalDashboard() {
     <div className="space-y-6">
       <PageHeader
         title={`Welcome back, ${clientName}`}
-        description="Your projects, billing and support — updated live from the 3xCode team."
+        description="Your projects, billing and support — updated live from the 3xCodz team."
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

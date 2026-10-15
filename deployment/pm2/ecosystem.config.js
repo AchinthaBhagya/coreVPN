@@ -1,4 +1,4 @@
-// PM2 process definition for the 3xCode backend.
+// PM2 process definition for the 3xCodz backend.
 // Usage: pm2 start deployment/pm2/ecosystem.config.js --env production
 //        pm2 save
 //

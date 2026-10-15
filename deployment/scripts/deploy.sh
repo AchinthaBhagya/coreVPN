@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -----------------------------------------------------------------------------
-# 3xCode Management System - release script (run on the server)
+# 3xCodz Management System - release script (run on the server)
 #
 #   /var/www/3xcode-management/deployment/scripts/deploy.sh [git-ref]
 #

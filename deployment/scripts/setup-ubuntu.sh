@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -----------------------------------------------------------------------------
-# 3xCode Management System - Ubuntu 24.04 (LTS) provisioning script
+# 3xCodz Management System - Ubuntu 24.04 (LTS) provisioning script
 #
 # Run as a passwordless sudo user on a FRESH server:
 #   chmod +x deployment/scripts/setup-ubuntu.sh
@@ -156,7 +156,7 @@ fi
 
 umask 077
 cat >/root/3xcode-credentials.txt <<CRED
-3xCode provisioning summary (KEEP PRIVATE)
+3xCodz provisioning summary (KEEP PRIVATE)
   App root          : $APP_ROOT
   MySQL root pass   : $MYSQL_ROOT_PASS
   MySQL app pass    : $MYSQL_APP_PASS

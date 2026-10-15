@@ -162,7 +162,7 @@ export default function PortalTickets() {
     <div className="space-y-6">
       <PageHeader
         title="Support tickets"
-        description="Track requests and stay in the conversation with the 3xCode team."
+        description="Track requests and stay in the conversation with the 3xCodz team."
         actions={
           canCreate ? (
             <Button onClick={() => setDialogOpen(true)}>

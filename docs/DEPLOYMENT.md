@@ -1,6 +1,6 @@
 # Deployment guide - Linode (Ubuntu 24.04 LTS)
 
-This is the end-to-end runbook for taking the 3xCode Management System from a
+This is the end-to-end runbook for taking the 3xCodz Management System from a
 fresh Linode instance to a working HTTPS deployment. Every command is copy-paste
 ready; replace the placeholders (`yourdomain.com`, `203.0.113.10`, …).
 
