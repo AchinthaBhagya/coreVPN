@@ -91,6 +91,13 @@ export function quotationEmail(quotationNo: string, clientName: string, total: s
   };
 }
 
+export function verificationEmail(name: string, link: string) {
+  return {
+    subject: '3xCodz - Verify your email address',
+    html: `<p>Hi ${escapeHtml(name)},</p><p>Welcome to 3xCodz. Please confirm your email address to activate your account. This link expires in 24 hours.</p><p><a href="${link}">Verify email address</a></p><p>If you did not create this account, you can ignore this email.</p>`,
+  };
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, '&amp;')

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { api, ApiError } from "@/lib/api";
+import { GoogleMark } from "@/components/common/GoogleMark";
 import { toast } from "@/hooks/use-toast";
 import { FullPageLoader } from "@/components/layout/guards";
 
@@ -29,6 +30,7 @@ export default function Login() {
   const [resetOpen, setResetOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetSending, setResetSending] = useState(false);
+  const [googleEnabled, setGoogleEnabled] = useState(false);
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -45,6 +47,13 @@ export default function Login() {
     if (!isBootstrapping && user) navigate(redirectTarget(user.isClient), { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isBootstrapping]);
+
+  useEffect(() => {
+    api
+      .get<{ google: boolean }>("/auth/providers")
+      .then((data) => setGoogleEnabled(Boolean(data?.google)))
+      .catch(() => setGoogleEnabled(false));
+  }, []);
 
   const onSubmit = form.handleSubmit(async (values) => {
     setSubmitting(true);
@@ -158,6 +167,29 @@ export default function Login() {
               {submitting ? "Signing in..." : "Sign in"}
             </Button>
           </form>
+
+          {googleEnabled ? (
+            <>
+              <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-wide text-muted-foreground">
+                <span className="h-px flex-1 bg-white/10" />
+                or
+                <span className="h-px flex-1 bg-white/10" />
+              </div>
+              <Button asChild variant="outline" className="w-full">
+                <a href="/api/auth/google">
+                  <GoogleMark />
+                  Continue with Google
+                </a>
+              </Button>
+            </>
+          ) : null}
+
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Don't have an account?{" "}
+            <Link to="/register" className="font-medium text-primary hover:underline">
+              Create one
+            </Link>
+          </p>
 
           {resetOpen ? (
             <Card className="mt-6">

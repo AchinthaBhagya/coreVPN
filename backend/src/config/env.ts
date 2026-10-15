@@ -39,6 +39,24 @@ export const env = {
     enabled: process.env.DISCORD_ENABLED === 'true',
     defaultWebhook: process.env.DISCORD_WEBHOOK_DEFAULT ?? '',
   },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+    // Absolute URL Google redirects back to. Defaults to the API's public origin.
+    redirectUri: process.env.GOOGLE_REDIRECT_URI ?? '',
+  },
 };
+
+/** True when Google OAuth credentials are configured (button is hidden otherwise). */
+export const googleOAuthEnabled = Boolean(env.google.clientId && env.google.clientSecret);
+
+/**
+ * The redirect URI registered with Google. When not overridden it is derived
+ * from FRONTEND_URL so the same-origin production deployment needs no extra config.
+ */
+export function googleRedirectUri(): string {
+  if (env.google.redirectUri) return env.google.redirectUri;
+  return `${env.frontendUrl.replace(/\/$/, '')}/api/auth/google/callback`;
+}
 
 export const DEFAULT_CURRENCY = 'LKR';

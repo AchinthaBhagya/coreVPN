@@ -15,6 +15,9 @@ export const CSRF_HEADER = 'x-csrf-token';
  */
 const EXEMPT_PATHS = new Set([
   '/auth/login',
+  '/auth/register',
+  '/auth/verify-email',
+  '/auth/resend-verification',
   '/auth/forgot-password',
   '/auth/reset-password',
 ]);
