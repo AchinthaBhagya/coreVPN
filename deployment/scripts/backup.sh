@@ -38,10 +38,26 @@ DB_PORT="${DB_PORT:-3306}"
 export MYSQL_PWD="$DB_PASS"
 
 echo "==> Dumping $DB_NAME"
+# Notes:
+#  - --result-file is NOT a stdout alias: with "-" mysqldump writes to a file
+#    literally named "-", so the pipe below would receive an empty stream.
+#    Dump to stdout and let the shell redirect it instead.
+#  - --no-tablespaces keeps mysqldump from needing the PROCESS privilege,
+#    which the application user does not have (and must not be granted).
 mysqldump \
   --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" \
+  --no-tablespaces \
   --single-transaction --routines --triggers --events \
-  --result-file=- "$DB_NAME" | gzip -9 >"$BACKUP_DIR/3xcode-db-$STAMP.sql.gz"
+  "$DB_NAME" | gzip -9 >"$BACKUP_DIR/3xcode-db-$STAMP.sql.gz"
+
+# Fail loudly rather than shipping an empty backup: a dump that does not
+# contain a single table definition is useless for recovery.
+if ! gunzip -c "$BACKUP_DIR/3xcode-db-$STAMP.sql.gz" | grep -q 'CREATE TABLE'; then
+  echo "Backup FAILED: $BACKUP_DIR/3xcode-db-$STAMP.sql.gz contains no tables" >&2
+  rm -f "$BACKUP_DIR/3xcode-db-$STAMP.sql.gz"
+  exit 1
+fi
+echo "==> Verified dump contains table definitions"
 
 UPLOAD_DIR="$(grep -E '^UPLOAD_DIR=' "$ENV_FILE" | head -n1 | cut -d= -f2- | tr -d '"'"'"'')"
 UPLOAD_DIR="${UPLOAD_DIR:-./uploads}"
