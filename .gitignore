@@ -51,7 +51,8 @@ storage
 
 # Prisma
 prisma/*.db
-prisma/migrations/migration_lock.toml
+backend/prisma/*.db
+*.db
 
 # PM2
 ecosystem.config.js.bak

@@ -82,7 +82,7 @@ const ToastClose = React.forwardRef<
     {...props}
   >
     <X className="h-4 w-4" />
-  </ToastClose>
+  </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName
 
@@ -109,6 +109,12 @@ const ToastDescription = React.forwardRef<
   />
 ))
 ToastDescription.displayName = ToastPrimitives.Description.displayName
+
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
+
+type ToastActionElement = React.ReactElement<{
+  props?: React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
+}>
 
 export {
   type ToastProps,

@@ -1,3 +1,6 @@
+// 3xCode Management System - Prisma schema
+// Datasource: MySQL (DECIMAL used for all monetary values)
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,6 +9,8 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+// ------------------------- ENUMS -------------------------
 
 enum UserStatus {
   ACTIVE
@@ -27,38 +32,330 @@ enum RoleType {
   CUSTOM
 }
 
-model User {
-  id        String     @id @default(cuid())
-  email     String     @unique
-  password  String
-  firstName String
-  lastName  String
-  phone     String?
-  avatar    String?
-  status    UserStatus @default(PENDING)
-  lastLogin DateTime?
-  twoFactorEnabled Boolean @default(false)
-  twoFactorSecret  String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?
+enum ClientType {
+  INDIVIDUAL
+  BUSINESS
+}
 
-  userRoles     UserRole[]
-  sessions      Session[]
-  auditLogs     AuditLog[]
-  createdBy     User?       @relation("UserCreated", fields: [createdById], references: [id])
-  createdById   String?
-  usersCreated  User[]      @relation("UserCreated")
-  client        Client?
-  assignedLeads Lead[]      @relation("LeadAssigned")
-  projectMembers ProjectMember[]
-  timeEntries   TimeEntry[]
-  tickets       Ticket[]    @relation("TicketAssigned")
-  notifications Notification[]
-  activities    ActivityLog[]
+enum ClientStatus {
+  LEAD
+  PROSPECT
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum ServicePricingModel {
+  FIXED
+  HOURLY
+  DAILY
+  MONTHLY
+  PROJECT_BASED
+  CUSTOM
+}
+
+enum ServiceStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  CANCELLED
+}
+
+enum OrderStatus {
+  DRAFT
+  SUBMITTED
+  CONFIRMED
+  IN_PROGRESS
+  DELIVERED
+  CANCELLED
+}
+
+enum ProjectStatus {
+  INQUIRY
+  QUOTATION
+  AWAITING_PAYMENT
+  PLANNING
+  IN_PROGRESS
+  ON_HOLD
+  REVIEW
+  CLIENT_APPROVAL
+  REVISION_REQUESTED
+  COMPLETED
+  CANCELLED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  REFUNDED
+}
+
+enum MilestoneStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  BLOCKED
+  DONE
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TimeEntryStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum RevisionStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  VOID
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  CARD
+  ONLINE_GATEWAY
+  PAYPAL
+  CRYPTO
+  OTHER
+}
+
+enum RefundKind {
+  REFUND
+  CREDIT_NOTE
+}
+
+enum ExpenseStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum ExpenseFrequency {
+  NONE
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum AllocationModel {
+  FIXED
+  PERCENT_OF_REVENUE
+  PERCENT_OF_PROFIT
+}
+
+enum EarningStatus {
+  PENDING
+  APPROVED
+  PAID
+  VOID
+}
+
+enum PayoutStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_CLIENT
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketCategory {
+  GENERAL
+  BILLING
+  TECHNICAL
+  PROJECT
+  REVISION
+  OTHER
+}
+
+enum AttachmentCategory {
+  PROJECT_ASSET
+  DELIVERABLE
+  DOCUMENT
+  CLIENT_UPLOAD
+  INVOICE_PDF
+  RECEIPT
+  DESIGN_PREVIEW
+  COMPLETION_FILE
+  AVATAR
+  OTHER
+}
+
+enum NotificationType {
+  LEAD_NEW
+  ORDER_NEW
+  PROJECT_ASSIGNED
+  TASK_ASSIGNED
+  DEADLINE_UPCOMING
+  TASK_OVERDUE
+  QUOTATION_APPROVAL
+  INVOICE_ISSUED
+  INVOICE_OVERDUE
+  PAYMENT_RECORDED
+  TICKET_CREATED
+  TICKET_REPLY
+  REVISION_REQUESTED
+  PROJECT_COMPLETED
+  PAYOUT_APPROVAL
+  SYSTEM
+}
+
+enum JobType {
+  INVOICE_OVERDUE_SCAN
+  DEADLINE_REMINDERS
+  RECURRING_EXPENSES
+  SESSION_CLEANUP
+  DISCORD_RETRY
+  FILE_CLEANUP
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+  CANCELLED
+}
+
+enum IntegrationProvider {
+  DISCORD
+  SMTP
+  PAYMENT_GATEWAY
+  CUSTOM_WEBHOOK
+}
+
+// ------------------------- AUTH & RBAC -------------------------
+
+model User {
+  id               String     @id @default(cuid())
+  email            String     @unique
+  password         String     @db.VarChar(255)
+  firstName        String
+  lastName         String
+  phone            String?
+  avatarId         String?    @unique
+  status           UserStatus @default(PENDING)
+  lastLogin        DateTime?
+  twoFactorEnabled Boolean    @default(false)
+  twoFactorSecret  String?
+  jobTitle         String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  deletedAt        DateTime?
+
+  avatar              Attachment?              @relation("UserAvatar", fields: [avatarId], references: [id])
+  userRoles           UserRole[]
+  sessions            Session[]
+  passwordResets      PasswordResetToken[]
+  auditLogs           AuditLog[]
+  activities          ActivityLog[]            @relation("ActivityActor")
+  createdBy           User?                    @relation("UserCreated", fields: [createdById], references: [id])
+  createdById         String?
+  usersCreated        User[]                   @relation("UserCreated")
+  client              Client?
+  leadsAssigned       Lead[]                   @relation("LeadAssigned")
+  projectMemberships  ProjectMember[]
+  projectsManaged     Project[]                @relation("ProjectManager")
+  tasksAssigned       Task[]                   @relation("TaskAssignee")
+  tasksReported       Task[]                   @relation("TaskReporter")
+  taskComments        TaskComment[]
+  timeEntries         TimeEntry[]              @relation("TimeEntryUser")
+  timeEntriesApproved TimeEntry[]              @relation("TimeEntryApprovedBy")
+  ticketsAssigned     Ticket[]                 @relation("TicketAssigned")
+  ticketsCreated      Ticket[]                 @relation("TicketCreatedBy")
+  ticketMessages      TicketMessage[]
+  notifications       Notification[]
+  notifPrefs          NotificationPreference[]
+  quotationsCreated   Quotation[]              @relation("QuotationCreatedBy")
+  ordersAssigned      Order[]                  @relation("OrderAssigned")
+  invoicesCreated     Invoice[]                @relation("InvoiceCreatedBy")
+  paymentsRecorded    Payment[]                @relation("PaymentRecordedBy")
+  refundsCreated      Refund[]                 @relation("RefundCreatedBy")
+  expensesCreated     Expense[]                @relation("ExpenseCreatedBy")
+  expensesApproved    Expense[]                @relation("ExpenseApprovedBy")
+  allocationRules     AllocationRule[]         @relation("AllocationRuleCreatedBy")
+  earnings            MemberEarning[]          @relation("EarningUser")
+  earningsApproved    MemberEarning[]          @relation("EarningApprovedBy")
+  payouts             MemberPayout[]           @relation("PayoutUser")
+  payoutsCreated      MemberPayout[]           @relation("PayoutCreatedBy")
+  attachments         Attachment[]             @relation("AttachmentUploader")
+  projectUpdates      ProjectUpdate[]
+  revisionRequests    RevisionRequest[]        @relation("RevisionRequestedBy")
 
   @@index([email])
   @@index([status])
+  @@index([deletedAt])
 }
 
 model Role {
@@ -70,7 +367,7 @@ model Role {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  userRoles      UserRole[]
+  userRoles       UserRole[]
   rolePermissions RolePermission[]
 }
 
@@ -83,6 +380,8 @@ model Permission {
   updatedAt   DateTime @updatedAt
 
   rolePermissions RolePermission[]
+
+  @@index([module])
 }
 
 model UserRole {
@@ -94,6 +393,8 @@ model UserRole {
   role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
 }
 
 model RolePermission {
@@ -105,12 +406,14 @@ model RolePermission {
   permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
 }
 
 model Session {
   id        String   @id @default(cuid())
   userId    String
-  token     String   @unique @db.VarChar(500)
+  token     String   @unique @db.VarChar(255)
   expiresAt DateTime
   ipAddress String?
   userAgent String?  @db.Text
@@ -119,13 +422,25 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@index([token])
   @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model AuditLog {
   id        String   @id @default(cuid())
-  userId    String
+  userId    String?
   action    String
   module    String
   entityId  String?
@@ -134,10 +449,941 @@ model AuditLog {
   details   Json?
   createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([action])
   @@index([module])
   @@index([createdAt])
+}
+
+// ------------------------- CRM -------------------------
+
+model Client {
+  id          String       @id @default(cuid())
+  userId      String?      @unique
+  type        ClientType   @default(BUSINESS)
+  companyName String?
+  firstName   String
+  lastName    String
+  email       String       @unique
+  phone       String?
+  address     String?      @db.Text
+  city        String?
+  country     String?
+  website     String?
+  taxId       String?
+  status      ClientStatus @default(ACTIVE)
+  leadSource  String?
+  tags        Json?
+  notes       String?      @db.Text
+  currency    String       @default("LKR") @db.VarChar(3)
+  accountManagerId String?
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+
+  user       User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  contacts   ClientContact[]
+  notesList  ClientNote[]
+  quotations Quotation[]
+  orders     Order[]
+  projects   Project[]
+  invoices   Invoice[]
+  payments   Payment[]
+  refunds    Refund[]
+  tickets    Ticket[]
+  attachments Attachment[]
+  activities ActivityLog[]
+
+  @@index([email])
+  @@index([status])
+  @@index([deletedAt])
+}
+
+model ClientContact {
+  id        String   @id @default(cuid())
+  clientId  String
+  firstName String
+  lastName  String
+  email     String?
+  phone     String?
+  position  String?
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+}
+
+model ClientNote {
+  id        String   @id @default(cuid())
+  clientId  String
+  authorId  String?
+  body      String   @db.Text
+  isInternal Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+}
+
+model Lead {
+  id            String     @id @default(cuid())
+  companyName   String?
+  firstName     String
+  lastName      String
+  email         String
+  phone         String?
+  website       String?
+  status        LeadStatus @default(NEW)
+  source        String?
+  estimatedValue Decimal?  @db.Decimal(15, 2)
+  currency      String     @default("LKR") @db.VarChar(3)
+  serviceInterest String?
+  notes         String?    @db.Text
+  assignedToId  String?
+  convertedClientId String? @unique
+  convertedAt   DateTime?
+  lostReason    String?
+  lastContactAt DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  assignedTo User? @relation("LeadAssigned", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([assignedToId])
+  @@index([email])
+}
+
+// ------------------------- SERVICES / QUOTATIONS / ORDERS -------------------------
+
+model Service {
+  id                  String              @id @default(cuid())
+  name                String
+  slug                String              @unique
+  category            String
+  shortDescription    String?             @db.Text
+  description         String?             @db.Text
+  publicDescription   String?             @db.Text
+  internalInstructions String?            @db.Text
+  pricingModel        ServicePricingModel @default(FIXED)
+  basePrice           Decimal             @default(0) @db.Decimal(15, 2)
+  currency            String              @default("LKR") @db.VarChar(3)
+  estimatedDelivery   String?
+  status              ServiceStatus       @default(ACTIVE)
+  icon                String?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  deletedAt           DateTime?
+
+  quotations  Quotation[]
+  orders      Order[]
+  projects    Project[]
+
+  @@index([category])
+  @@index([status])
+}
+
+model Quotation {
+  id             String          @id @default(cuid())
+  quotationNo    String          @unique
+  clientId       String
+  serviceId      String?
+  title          String
+  status         QuotationStatus @default(DRAFT)
+  currency       String          @default("LKR") @db.VarChar(3)
+  subtotal       Decimal         @default(0) @db.Decimal(15, 2)
+  discountTotal  Decimal         @default(0) @db.Decimal(15, 2)
+  taxRate        Decimal         @default(0) @db.Decimal(5, 2)
+  taxTotal       Decimal         @default(0) @db.Decimal(15, 2)
+  total          Decimal         @default(0) @db.Decimal(15, 2)
+  validUntil     DateTime?
+  terms          String?         @db.Text
+  internalNotes  String?         @db.Text
+  clientNotes    String?         @db.Text
+  createdById    String?
+  sentAt         DateTime?
+  decidedAt      DateTime?
+  rejectionReason String?        @db.Text
+  convertedProjectId String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  client  Client          @relation(fields: [clientId], references: [id])
+  service Service?        @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  createdBy User?         @relation("QuotationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  items   QuotationItem[]
+  orders  Order[]
+
+  @@index([clientId])
+  @@index([status])
+}
+
+model QuotationItem {
+  id          String  @id @default(cuid())
+  quotationId String
+  description String
+  quantity    Decimal @default(1) @db.Decimal(12, 3)
+  unitPrice   Decimal @default(0) @db.Decimal(15, 2)
+  discount    Decimal @default(0) @db.Decimal(15, 2)
+  lineTotal   Decimal @default(0) @db.Decimal(15, 2)
+  sortOrder   Int     @default(0)
+
+  quotation Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+  @@index([quotationId])
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  orderNo          String      @unique
+  clientId         String
+  serviceId        String?
+  quotationId      String?
+  title            String
+  requirements     String?     @db.Text
+  budget           Decimal?    @db.Decimal(15, 2)
+  currency         String      @default("LKR") @db.VarChar(3)
+  expectedDelivery DateTime?
+  status           OrderStatus @default(DRAFT)
+  assignedToId     String?
+  projectId        String?
+  createdById      String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  client     Client     @relation(fields: [clientId], references: [id])
+  service    Service?   @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  quotation  Quotation? @relation(fields: [quotationId], references: [id], onDelete: SetNull)
+  assignedTo User?      @relation("OrderAssigned", fields: [assignedToId], references: [id], onDelete: SetNull)
+  invoices   Invoice[]
+
+  @@index([clientId])
+  @@index([status])
+}
+
+// ------------------------- PROJECTS -------------------------
+
+model Project {
+  id             String          @id @default(cuid())
+  projectNo      String          @unique
+  name           String
+  clientId       String
+  serviceId      String?
+  description    String?         @db.Text
+  managerId      String?
+  budget         Decimal         @default(0) @db.Decimal(15, 2)
+  currency       String          @default("LKR") @db.VarChar(3)
+  startDate      DateTime?
+  deadline       DateTime?
+  completedAt    DateTime?
+  priority       ProjectPriority @default(MEDIUM)
+  status         ProjectStatus   @default(INQUIRY)
+  paymentStatus  PaymentStatus   @default(UNPAID)
+  estimatedHours Decimal?        @db.Decimal(10, 2)
+  actualHours    Decimal         @default(0) @db.Decimal(10, 2)
+  progress       Int             @default(0)
+  internalNotes  String?         @db.Text
+  tags           Json?
+  createdById    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
+
+  client          Client            @relation(fields: [clientId], references: [id])
+  service         Service?          @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  manager         User?             @relation("ProjectManager", fields: [managerId], references: [id], onDelete: SetNull)
+  members         ProjectMember[]
+  milestones      Milestone[]
+  tasks           Task[]
+  updates         ProjectUpdate[]
+  revisions       RevisionRequest[]
+  timeEntries     TimeEntry[]
+  invoices        Invoice[]
+  expenses        Expense[]
+  attachments     Attachment[]
+  checklist       ChecklistItem[]
+  allocationRules AllocationRule[]
+  earnings        MemberEarning[]
+  activities      ActivityLog[]
+
+  @@index([clientId])
+  @@index([status])
+  @@index([managerId])
+  @@index([deadline])
+  @@index([deletedAt])
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  role      String?
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model Milestone {
+  id           String          @id @default(cuid())
+  projectId    String
+  title        String
+  description  String?         @db.Text
+  dueDate      DateTime?
+  completedAt  DateTime?
+  status       MilestoneStatus @default(PENDING)
+  isClientVisible Boolean      @default(true)
+  sortOrder    Int             @default(0)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ProjectUpdate {
+  id             String   @id @default(cuid())
+  projectId      String
+  authorId       String?
+  title          String?
+  body           String   @db.Text
+  isClientVisible Boolean @default(true)
+  createdAt      DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  author  User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([projectId])
+}
+
+model RevisionRequest {
+  id          String         @id @default(cuid())
+  projectId   String
+  requestedById String?
+  title       String
+  description String         @db.Text
+  status      RevisionStatus @default(OPEN)
+  resolvedAt  DateTime?
+  response    String?        @db.Text
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  requestedBy User?   @relation("RevisionRequestedBy", fields: [requestedById], references: [id], onDelete: SetNull)
+
+  @@index([projectId])
+  @@index([status])
+}
+
+model ChecklistItem {
+  id        String   @id @default(cuid())
+  projectId String?
+  taskId    String?
+  title     String
+  isDone    Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task    Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([taskId])
+}
+
+// ------------------------- TASKS & TIME -------------------------
+
+model Task {
+  id             String       @id @default(cuid())
+  projectId      String?
+  parentTaskId   String?
+  title          String
+  description    String?      @db.Text
+  status         TaskStatus   @default(TODO)
+  priority       TaskPriority @default(MEDIUM)
+  assigneeId     String?
+  reporterId     String?
+  startDate      DateTime?
+  dueDate        DateTime?
+  completedAt    DateTime?
+  estimatedHours Decimal?     @db.Decimal(10, 2)
+  actualHours    Decimal      @default(0) @db.Decimal(10, 2)
+  labels         Json?
+  sortOrder      Int          @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  project     Project?        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  parent      Task?           @relation("Subtasks", fields: [parentTaskId], references: [id], onDelete: Cascade)
+  subtasks    Task[]          @relation("Subtasks")
+  assignee    User?           @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  reporter    User?           @relation("TaskReporter", fields: [reporterId], references: [id], onDelete: SetNull)
+  comments    TaskComment[]
+  timeEntries TimeEntry[]
+  attachments Attachment[]
+  checklist   ChecklistItem[]
+  dependencies TaskDependency[] @relation("TaskDependencyTask")
+  dependents   TaskDependency[] @relation("TaskDependencyDependsOn")
+
+  @@index([projectId])
+  @@index([assigneeId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model TaskDependency {
+  id            String @id @default(cuid())
+  taskId        String
+  dependsOnTaskId String
+  createdAt     DateTime @default(now())
+
+  task          Task @relation("TaskDependencyTask", fields: [taskId], references: [id], onDelete: Cascade)
+  dependsOnTask Task @relation("TaskDependencyDependsOn", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, dependsOnTaskId])
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  taskId    String
+  authorId  String?
+  body      String   @db.Text
+  isInternal Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  task   Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  author User? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([taskId])
+}
+
+model TimeEntry {
+  id              String          @id @default(cuid())
+  userId          String
+  projectId       String?
+  taskId          String?
+  description     String?         @db.Text
+  startedAt       DateTime
+  endedAt         DateTime?
+  durationMinutes Int             @default(0)
+  isBillable      Boolean         @default(true)
+  status          TimeEntryStatus @default(DRAFT)
+  approvedById    String?
+  approvedAt      DateTime?
+  rejectionNote   String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user       User     @relation("TimeEntryUser", fields: [userId], references: [id], onDelete: Cascade)
+  project    Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  task       Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  approvedBy User?    @relation("TimeEntryApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([taskId])
+  @@index([startedAt])
+}
+
+// ------------------------- FINANCE -------------------------
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNo     String        @unique
+  clientId      String
+  projectId     String?
+  orderId       String?
+  status        InvoiceStatus @default(DRAFT)
+  currency      String        @default("LKR") @db.VarChar(3)
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime?
+  subtotal      Decimal       @default(0) @db.Decimal(15, 2)
+  discountTotal Decimal       @default(0) @db.Decimal(15, 2)
+  taxRate       Decimal       @default(0) @db.Decimal(5, 2)
+  taxTotal      Decimal       @default(0) @db.Decimal(15, 2)
+  total         Decimal       @default(0) @db.Decimal(15, 2)
+  amountPaid    Decimal       @default(0) @db.Decimal(15, 2)
+  balance       Decimal       @default(0) @db.Decimal(15, 2)
+  notes         String?       @db.Text
+  terms         String?       @db.Text
+  createdById   String?
+  sentAt        DateTime?
+  paidAt        DateTime?
+  voidedAt      DateTime?
+  voidReason    String?
+  reminderCount Int           @default(0)
+  lastReminderAt DateTime?
+  pdfAttachmentId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  client   Client        @relation(fields: [clientId], references: [id])
+  project  Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  order    Order?        @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  createdBy User?        @relation("InvoiceCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  items    InvoiceItem[]
+  payments Payment[]
+  refunds  Refund[]
+  attachments Attachment[]
+
+  @@index([clientId])
+  @@index([projectId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model InvoiceItem {
+  id          String  @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Decimal @default(1) @db.Decimal(12, 3)
+  unitPrice   Decimal @default(0) @db.Decimal(15, 2)
+  discount    Decimal @default(0) @db.Decimal(15, 2)
+  lineTotal   Decimal @default(0) @db.Decimal(15, 2)
+  sortOrder   Int     @default(0)
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  paymentNo    String        @unique
+  invoiceId    String?
+  clientId     String
+  amount       Decimal       @db.Decimal(15, 2)
+  currency     String        @default("LKR") @db.VarChar(3)
+  method       PaymentMethod @default(BANK_TRANSFER)
+  reference    String?
+  paidAt       DateTime      @default(now())
+  notes        String?       @db.Text
+  recordedById String?
+  isVoid       Boolean       @default(false)
+  voidReason   String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  invoice    Invoice? @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  client     Client   @relation(fields: [clientId], references: [id])
+  recordedBy User?    @relation("PaymentRecordedBy", fields: [recordedById], references: [id], onDelete: SetNull)
+  refunds    Refund[]
+  attachments Attachment[]
+
+  @@index([clientId])
+  @@index([invoiceId])
+  @@index([paidAt])
+}
+
+model Refund {
+  id          String     @id @default(cuid())
+  refundNo    String     @unique
+  kind        RefundKind @default(REFUND)
+  paymentId   String?
+  invoiceId   String?
+  clientId    String
+  amount      Decimal    @db.Decimal(15, 2)
+  currency    String     @default("LKR") @db.VarChar(3)
+  reason      String?    @db.Text
+  createdById String?
+  createdAt   DateTime   @default(now())
+
+  payment   Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  invoice   Invoice? @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  client    Client   @relation(fields: [clientId], references: [id])
+  createdBy User?    @relation("RefundCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([clientId])
+  @@index([invoiceId])
+}
+
+model ExpenseCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  expenses Expense[]
+}
+
+model Expense {
+  id             String            @id @default(cuid())
+  expenseNo      String            @unique
+  categoryId     String
+  projectId      String?
+  vendor         String?
+  description    String            @db.Text
+  amount         Decimal           @db.Decimal(15, 2)
+  taxAmount      Decimal           @default(0) @db.Decimal(15, 2)
+  currency       String            @default("LKR") @db.VarChar(3)
+  expenseDate    DateTime          @default(now())
+  method         PaymentMethod     @default(BANK_TRANSFER)
+  status         ExpenseStatus     @default(PENDING)
+  isRecurring    Boolean           @default(false)
+  frequency      ExpenseFrequency  @default(NONE)
+  nextDueDate    DateTime?
+  isClientBillable Boolean         @default(false)
+  notes          String?           @db.Text
+  receiptId      String?
+  createdById    String?
+  approvedById   String?
+  approvedAt     DateTime?
+  paidAt         DateTime?
+  rejectionNote  String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  category   ExpenseCategory @relation(fields: [categoryId], references: [id])
+  project    Project?        @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdBy  User?           @relation("ExpenseCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  approvedBy User?           @relation("ExpenseApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+
+  @@index([categoryId])
+  @@index([projectId])
+  @@index([status])
+  @@index([expenseDate])
+}
+
+// ------------------------- PROFIT ALLOCATION -------------------------
+
+model AllocationRule {
+  id            String          @id @default(cuid())
+  projectId     String
+  name          String
+  model         AllocationModel @default(PERCENT_OF_PROFIT)
+  version       Int             @default(1)
+  isActive      Boolean         @default(true)
+  notes         String?         @db.Text
+  createdById   String?
+  supersededById String?
+  effectiveFrom DateTime        @default(now())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  project   Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy User?             @relation("AllocationRuleCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  items     AllocationRuleItem[]
+  earnings  MemberEarning[]
+
+  @@index([projectId])
+  @@index([isActive])
+}
+
+model AllocationRuleItem {
+  id          String  @id @default(cuid())
+  ruleId      String
+  userId      String
+  percent     Decimal? @db.Decimal(6, 3)
+  fixedAmount Decimal? @db.Decimal(15, 2)
+  role        String?
+
+  rule AllocationRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@index([ruleId])
+  @@index([userId])
+}
+
+model MemberEarning {
+  id            String        @id @default(cuid())
+  userId        String
+  projectId     String
+  ruleId        String?
+  ruleVersion   Int           @default(1)
+  model         AllocationModel @default(PERCENT_OF_PROFIT)
+  basisAmount   Decimal       @default(0) @db.Decimal(15, 2)
+  percent       Decimal?      @db.Decimal(6, 3)
+  amount        Decimal       @db.Decimal(15, 2)
+  currency      String        @default("LKR") @db.VarChar(3)
+  status        EarningStatus @default(PENDING)
+  isRoundingAdjustment Boolean @default(false)
+  approvedById  String?
+  approvedAt    DateTime?
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user       User            @relation("EarningUser", fields: [userId], references: [id], onDelete: Cascade)
+  project    Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  rule       AllocationRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+  approvedBy User?           @relation("EarningApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+  payoutItems MemberPayoutItem[]
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([status])
+}
+
+model MemberPayout {
+  id           String       @id @default(cuid())
+  payoutNo     String       @unique
+  userId       String
+  amount       Decimal      @db.Decimal(15, 2)
+  currency     String       @default("LKR") @db.VarChar(3)
+  method       PaymentMethod @default(BANK_TRANSFER)
+  reference    String?
+  status       PayoutStatus @default(DRAFT)
+  notes        String?      @db.Text
+  createdById  String?
+  approvedById String?
+  approvedAt   DateTime?
+  paidAt       DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  user     User             @relation("PayoutUser", fields: [userId], references: [id], onDelete: Cascade)
+  createdBy User?           @relation("PayoutCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  items    MemberPayoutItem[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model MemberPayoutItem {
+  id         String @id @default(cuid())
+  payoutId   String
+  earningId  String
+  amount     Decimal @db.Decimal(15, 2)
+
+  payout  MemberPayout  @relation(fields: [payoutId], references: [id], onDelete: Cascade)
+  earning MemberEarning @relation(fields: [earningId], references: [id], onDelete: Cascade)
+
+  @@unique([payoutId, earningId])
+  @@index([earningId])
+}
+
+// ------------------------- SUPPORT -------------------------
+
+model Ticket {
+  id                String         @id @default(cuid())
+  ticketNo          String         @unique
+  clientId          String
+  projectId         String?
+  subject           String
+  description       String         @db.Text
+  category          TicketCategory @default(GENERAL)
+  priority          TicketPriority @default(MEDIUM)
+  status            TicketStatus   @default(OPEN)
+  assignedToId      String?
+  createdById       String?
+  resolutionSummary String?        @db.Text
+  firstResponseAt   DateTime?
+  lastReplyAt       DateTime?
+  resolvedAt        DateTime?
+  closedAt          DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  client     Client          @relation(fields: [clientId], references: [id])
+  assignedTo User?           @relation("TicketAssigned", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdBy  User?           @relation("TicketCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  messages   TicketMessage[]
+  attachments Attachment[]
+
+  @@index([clientId])
+  @@index([status])
+  @@index([assignedToId])
+}
+
+model TicketMessage {
+  id         String   @id @default(cuid())
+  ticketId   String
+  authorId   String?
+  body       String   @db.Text
+  isInternal Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  ticket     Ticket       @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author     User?        @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  attachments Attachment[]
+
+  @@index([ticketId])
+}
+
+// ------------------------- FILES -------------------------
+
+model Attachment {
+  id             String             @id @default(cuid())
+  storageKey     String             @unique
+  originalName   String
+  mimeType       String
+  size           Int
+  category       AttachmentCategory @default(OTHER)
+  checksum       String?
+  uploadedById   String
+  projectId      String?
+  taskId         String?
+  clientId       String?
+  invoiceId      String?
+  paymentId      String?
+  ticketId       String?
+  ticketMessageId String?
+  isClientVisible Boolean           @default(false)
+  createdAt      DateTime           @default(now())
+  deletedAt      DateTime?
+
+  uploadedBy    User           @relation("AttachmentUploader", fields: [uploadedById], references: [id])
+  project       Project?       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task          Task?          @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  client        Client?        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  invoice       Invoice?       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  payment       Payment?       @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  ticket        Ticket?        @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ticketMessage TicketMessage? @relation(fields: [ticketMessageId], references: [id], onDelete: Cascade)
+  userAvatar    User?          @relation("UserAvatar")
+
+  @@index([projectId])
+  @@index([taskId])
+  @@index([clientId])
+  @@index([invoiceId])
+  @@index([ticketId])
+  @@index([uploadedById])
+}
+
+// ------------------------- NOTIFICATIONS / ACTIVITY -------------------------
+
+model Notification {
+  id         String           @id @default(cuid())
+  userId     String
+  type       NotificationType
+  title      String
+  message    String?          @db.Text
+  link       String?
+  entityType String?
+  entityId   String?
+  isRead     Boolean          @default(false)
+  readAt     DateTime?
+  dedupeKey  String?          @unique
+  createdAt  DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+}
+
+model NotificationPreference {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  inApp     Boolean          @default(true)
+  email     Boolean          @default(false)
+  discord   Boolean          @default(false)
+  updatedAt DateTime         @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type])
+  @@index([userId])
+}
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  summary    String   @db.Text
+  metadata   Json?
+  projectId  String?
+  clientId   String?
+  isClientVisible Boolean @default(false)
+  createdAt  DateTime @default(now())
+
+  actor   User?    @relation("ActivityActor", fields: [actorId], references: [id], onDelete: SetNull)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  client  Client?  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([entityType, entityId])
+  @@index([projectId])
+  @@index([clientId])
+  @@index([createdAt])
+}
+
+// ------------------------- SYSTEM / SETTINGS -------------------------
+
+model CompanySetting {
+  id                    String   @id @default("default")
+  companyName           String   @default("3xCode")
+  legalName             String?
+  email                 String?
+  phone                 String?
+  website               String?
+  address               String?  @db.Text
+  taxId                 String?
+  logoId                String?
+  currency              String   @default("LKR") @db.VarChar(3)
+  secondaryCurrency     String?  @db.VarChar(3)
+  exchangeRate          Decimal? @db.Decimal(15, 6)
+  timezone              String   @default("Asia/Colombo")
+  dateFormat            String   @default("yyyy-MM-dd")
+  numberFormat          String   @default("en-LK")
+  invoicePrefix         String   @default("INV-")
+  quotationPrefix       String   @default("QT-")
+  orderPrefix           String   @default("ORD-")
+  projectPrefix         String   @default("PRJ-")
+  taxRate               Decimal  @default(0) @db.Decimal(5, 2)
+  defaultAllocationModel AllocationModel @default(PERCENT_OF_PROFIT)
+  paymentTermsDays      Int      @default(14)
+  maintenanceMode       Boolean  @default(false)
+  updatedAt             DateTime @updatedAt
+}
+
+model IntegrationSetting {
+  id          String              @id @default(cuid())
+  provider    IntegrationProvider
+  key         String
+  value       String?             @db.Text
+  isSecret    Boolean             @default(false)
+  isEnabled   Boolean             @default(true)
+  description String?
+  failureCount Int                @default(0)
+  lastError   String?             @db.Text
+  lastUsedAt  DateTime?
+  updatedById String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([provider, key])
+  @@index([provider])
+}
+
+// Atomic sequential document numbering (e.g. INV-2026-0042)
+model DocumentCounter {
+  id         String   @id @default(cuid())
+  counterKey String   @unique
+  value      Int      @default(0)
+  updatedAt  DateTime @updatedAt
+}
+
+model BackgroundJob {
+  id         String    @id @default(cuid())
+  type       JobType
+  status     JobStatus @default(PENDING)
+  runAt      DateTime  @default(now())
+  startedAt  DateTime?
+  finishedAt DateTime?
+  attempts   Int       @default(0)
+  maxAttempts Int      @default(3)
+  lastError  String?   @db.Text
+  payload    Json?
+  dedupeKey  String?   @unique
+  createdAt  DateTime  @default(now())
+
+  @@index([status, runAt])
+  @@index([type])
 }

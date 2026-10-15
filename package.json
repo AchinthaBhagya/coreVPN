@@ -20,7 +20,7 @@
     "typecheck:frontend": "cd frontend && npm run typecheck",
     "typecheck:backend": "cd backend && npm run typecheck",
     "test": "npm run test:frontend && npm run test:backend",
-    "test:frontend": "cd frontend && npm run test -- --run",
+    "test:frontend": "cd frontend && npm run test",
     "test:backend": "cd backend && npm run test"
   },
   "devDependencies": {

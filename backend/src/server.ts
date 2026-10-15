@@ -1,66 +1,40 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import compression from 'compression';
-import cookieParser from 'cookie-parser';
-import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
-import path from 'path';
+import { createApp } from './app';
+import { env } from './config/env';
+import logger from './config/logger';
+import { prisma } from './config/prisma';
+import { startScheduler, stopScheduler } from './jobs/scheduler';
 
-dotenv.config();
+async function main() {
+  const app = createApp();
 
-const app = express();
+  const server = app.listen(env.port, () => {
+    logger.info(`3xCode API listening on port ${env.port}`, { env: env.nodeEnv });
+  });
 
-// Security middleware
-app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-  credentials: true,
-}));
-app.use(compression());
-app.use(cookieParser());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+  // Background jobs (invoice overdue scans, reminders, cleanup, Discord retries).
+  startScheduler();
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests from this IP, please try again later.',
-});
-app.use('/api', limiter);
+  const shutdown = async (signal: string) => {
+    logger.info(`Received ${signal}, shutting down gracefully`);
+    stopScheduler();
+    server.close(() => {
+      void prisma.$disconnect().finally(() => process.exit(0));
+    });
+    // Force-exit if connections do not drain in time.
+    setTimeout(() => process.exit(1), 10_000).unref();
+  };
 
-// Health check
-app.use('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Routes will be added here
-app.use('/api/auth', (req, res) => res.status(501).json({ message: 'Not implemented yet' }));
-app.use('/api/users', (req, res) => res.status(501).json({ message: 'Not implemented yet' }));
-
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+  process.on('SIGINT', () => void shutdown('SIGINT'));
+  process.on('SIGTERM', () => void shutdown('SIGTERM'));
+  process.on('unhandledRejection', (reason) => {
+    logger.error('Unhandled promise rejection', { reason });
+  });
+  process.on('uncaughtException', (error) => {
+    logger.error('Uncaught exception', { error });
   });
 }
 
-// Global error handler
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.isOperational ? err.message : 'Internal Server Error';
-  res.status(statusCode).json({
-    status: err.status || 'error',
-    message: process.env.NODE_ENV === 'production' ? message : err.message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
-  });
+main().catch((error) => {
+  logger.error('Failed to start server', { error });
+  process.exit(1);
 });
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-export default app;
