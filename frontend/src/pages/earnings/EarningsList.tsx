@@ -112,7 +112,7 @@ export default function EarningsList() {
             <Button
               size="sm"
               variant="ghost"
-              className="text-rose-300"
+              className="text-danger"
               onClick={() => {
                 setVoidTarget(earning);
                 setVoidReason("");

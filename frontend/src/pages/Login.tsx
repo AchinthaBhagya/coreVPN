@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { api, ApiError } from "@/lib/api";
 import { GoogleMark } from "@/components/common/GoogleMark";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { toast } from "@/hooks/use-toast";
 import { FullPageLoader } from "@/components/layout/guards";
 
@@ -88,21 +89,24 @@ export default function Login() {
   if (isBootstrapping) return <FullPageLoader />;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#05070d] px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <div className="absolute right-4 top-4 z-10">
+        <ThemeToggle />
+      </div>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
       </div>
 
-      <div className="relative grid w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl backdrop-blur-2xl lg:grid-cols-2">
-        <div className="hidden flex-col justify-between gap-8 border-r border-white/10 bg-gradient-to-br from-sky-500/10 via-transparent to-violet-600/10 p-10 lg:flex">
+      <div className="relative grid w-full max-w-5xl overflow-hidden rounded-3xl glass sheen lg:grid-cols-2">
+        <div className="hidden flex-col justify-between gap-8 border-r border-border bg-gradient-to-br from-primary/10 via-transparent to-amber-500/10 p-10 lg:flex">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-white/10">
+            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-border">
               <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
             </div>
             <div>
-              <p className="text-lg font-semibold tracking-tight">3xCodz</p>
+              <p className="text-lg font-semibold tracking-tight gold-text">3xCodz</p>
               <p className="text-xs text-muted-foreground">Management System</p>
             </div>
           </div>
@@ -117,7 +121,7 @@ export default function Login() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             {["Role-based access on every endpoint", "Transparent profit allocation & payouts", "Client portal with secure file delivery"].map((line) => (
               <li key={line} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                 {line}
               </li>
             ))}
@@ -171,9 +175,9 @@ export default function Login() {
           {googleEnabled ? (
             <>
               <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-wide text-muted-foreground">
-                <span className="h-px flex-1 bg-white/10" />
+                <span className="h-px flex-1 bg-muted/60" />
                 or
-                <span className="h-px flex-1 bg-white/10" />
+                <span className="h-px flex-1 bg-muted/60" />
               </div>
               <Button asChild variant="outline" className="w-full">
                 <a href="/api/auth/google">

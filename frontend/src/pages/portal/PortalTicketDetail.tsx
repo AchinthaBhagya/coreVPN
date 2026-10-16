@@ -47,9 +47,9 @@ function MessageBubble({
   isClient: boolean;
 }) {
   return (
-    <div className={cn("max-w-[85%] space-y-1.5 rounded-xl border p-3", isClient ? "ml-auto border-sky-500/30 bg-sky-500/10" : "border-white/10 bg-white/[0.03]")}>
+    <div className={cn("max-w-[85%] space-y-1.5 rounded-xl border p-3", isClient ? "ml-auto border-info/30 bg-info/10" : "border-border bg-muted/25")}>
       <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
-        <span className={cn("font-medium", isClient ? "text-sky-300" : "text-foreground")}>{authorLabel}</span>
+        <span className={cn("font-medium", isClient ? "text-info" : "text-foreground")}>{authorLabel}</span>
         <span>{formatDateTime(createdAt)}</span>
       </div>
       <p className="whitespace-pre-wrap text-sm text-foreground">{body}</p>
@@ -149,10 +149,10 @@ export default function PortalTicketDetail() {
       />
 
       {ticket.resolutionSummary ? (
-        <Alert className="border-emerald-500/30 bg-emerald-500/10">
-          <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-          <AlertTitle className="text-emerald-200">Resolution summary</AlertTitle>
-          <AlertDescription className="whitespace-pre-wrap text-emerald-200/80">
+        <Alert className="border-success/30 bg-success/10">
+          <CheckCircle2 className="h-4 w-4 text-success" />
+          <AlertTitle className="text-success">Resolution summary</AlertTitle>
+          <AlertDescription className="whitespace-pre-wrap text-success/80">
             {ticket.resolutionSummary}
           </AlertDescription>
         </Alert>
@@ -195,7 +195,7 @@ export default function PortalTicketDetail() {
               title="Attachments"
               description="Files shared on this ticket. Downloads use your portal sign-in."
             >
-              <ul className="divide-y divide-white/5">
+              <ul className="divide-y divide-border/70">
                 {(ticket.attachments ?? []).map((attachment) => (
                   <li key={attachment.id} className="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
                     <div className="flex min-w-0 items-center gap-2.5">

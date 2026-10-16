@@ -422,7 +422,7 @@ export default function ClientList() {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-rose-300 hover:text-rose-200"
+              className="h-8 w-8 text-danger hover:text-danger/80"
               title="Archive client"
               onClick={() => setArchiving(row.original)}
             >

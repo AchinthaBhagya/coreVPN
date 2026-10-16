@@ -7,19 +7,19 @@ describe("StatusBadge", () => {
     render(<StatusBadge status="PAID" />);
     const badge = screen.getByText("Paid");
     expect(badge).toBeInTheDocument();
-    expect(badge.className).toContain("bg-emerald-500/15");
+    expect(badge.className).toContain("bg-success/15");
   });
 
   it("renders the destructive tone for a danger status", () => {
     render(<StatusBadge status="OVERDUE" />);
     const badge = screen.getByText("Overdue");
     expect(badge).toBeInTheDocument();
-    expect(badge.className).toContain("bg-destructive/20");
+    expect(badge.className).toContain("bg-destructive/15");
   });
 
   it("renders the muted tone for a muted status", () => {
     render(<StatusBadge status="DRAFT" />);
-    expect(screen.getByText("Draft").className).toContain("bg-white/5");
+    expect(screen.getByText("Draft").className).toContain("bg-muted/40");
   });
 
   it("prefers an explicit label over the derived one", () => {
@@ -36,6 +36,6 @@ describe("StatusBadge", () => {
 describe("ToneBadge", () => {
   it("renders children with the mapped variant", () => {
     render(<ToneBadge tone="warning">Look</ToneBadge>);
-    expect(screen.getByText("Look").className).toContain("bg-amber-500/15");
+    expect(screen.getByText("Look").className).toContain("bg-warning/15");
   });
 });

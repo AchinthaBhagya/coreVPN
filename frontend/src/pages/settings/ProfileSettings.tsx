@@ -238,7 +238,7 @@ function AccessCard({ user }: { user: AuthUser }) {
             <span className="ml-2 text-foreground">{permissions.length}</span>
           </p>
           {permissions.length ? (
-            <div className="max-h-52 overflow-y-auto rounded-lg border border-white/10 bg-white/[0.02] p-3">
+            <div className="max-h-52 overflow-y-auto rounded-lg border border-border bg-muted/20 p-3">
               <div className="flex flex-wrap gap-1.5">
                 {permissions.map((permission) => (
                   <Badge key={permission} variant="muted" className="font-mono text-[11px]">

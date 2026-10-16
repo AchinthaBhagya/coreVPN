@@ -186,7 +186,7 @@ function TimerCard() {
   if (!canLog) return null;
 
   return (
-    <Card className="border-white/10 bg-white/5">
+    <Card className="border-border bg-muted/40">
       <CardContent className="p-4">
         {running.isError ? (
           <ErrorState
@@ -562,7 +562,7 @@ export default function TimeTracking() {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-emerald-300 hover:text-emerald-200"
+                  className="h-8 w-8 text-success hover:text-success/80"
                   aria-label="Approve entry"
                   onClick={() => actionMutation.mutate({ id: entry.id, action: "approve" })}
                 >
@@ -572,7 +572,7 @@ export default function TimeTracking() {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-rose-300 hover:text-rose-200"
+                  className="h-8 w-8 text-danger hover:text-danger/80"
                   aria-label="Reject entry"
                   onClick={() => setRejectTarget(entry)}
                 >
@@ -585,7 +585,7 @@ export default function TimeTracking() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-rose-300 hover:text-rose-200"
+                className="h-8 w-8 text-danger hover:text-danger/80"
                 aria-label="Delete entry"
                 onClick={() => setDeleteTarget(entry)}
               >

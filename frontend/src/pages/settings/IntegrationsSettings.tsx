@@ -252,7 +252,7 @@ export default function IntegrationsSettings() {
         if (error || failures > 0) {
           return (
             <div className="space-y-1">
-              <p className="max-w-[28ch] break-words text-xs font-medium text-rose-300">{error ?? "Delivery failed"}</p>
+              <p className="max-w-[28ch] break-words text-xs font-medium text-danger">{error ?? "Delivery failed"}</p>
               <p className="text-[11px] text-muted-foreground">
                 {failures} {failures === 1 ? "failure" : "failures"} - retried &amp; logged server-side
               </p>

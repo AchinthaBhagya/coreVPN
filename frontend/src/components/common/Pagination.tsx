@@ -14,7 +14,7 @@ export function Pagination({
   const { page, totalPages, total, hasNext, hasPrev } = pagination;
 
   return (
-    <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-sm sm:flex-row">
+    <div className="flex flex-col items-center justify-between gap-3 border-t border-border px-4 py-3 text-sm sm:flex-row">
       <p className="text-muted-foreground">
         Page <span className="text-foreground">{page}</span> of{" "}
         <span className="text-foreground">{Math.max(totalPages, 1)}</span> · {formatNumber(total)} records

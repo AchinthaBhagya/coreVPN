@@ -31,6 +31,7 @@ import {
 import { api } from "@/lib/api";
 import { qk } from "@/lib/queryClient";
 import { useAuth } from "@/context/AuthContext";
+import { useChartTheme } from "@/lib/chartTheme";
 import { PageHeader } from "@/components/common/PageHeader";
 import { StatCard } from "@/components/common/StatCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
@@ -63,10 +64,9 @@ interface DashboardResponse {
   };
 }
 
-const CHART_COLORS = ["#38bdf8", "#8b5cf6", "#34d399", "#fbbf24", "#fb7185", "#22d3ee", "#a78bfa"];
-
 export default function DashboardPage() {
   const { user } = useAuth();
+  const chart = useChartTheme();
   const query = useQuery({
     queryKey: qk.dashboard,
     queryFn: () => api.get<DashboardResponse>("/dashboard"),
@@ -118,28 +118,25 @@ export default function DashboardPage() {
                 <AreaChart data={data.charts.monthly} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
                   <defs>
                     <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.5} />
-                      <stop offset="95%" stopColor="#38bdf8" stopOpacity={0} />
+                      <stop offset="5%" stopColor={chart.series.revenue} stopOpacity={0.5} />
+                      <stop offset="95%" stopColor={chart.series.revenue} stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="cash" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#34d399" stopOpacity={0.5} />
-                      <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
+                      <stop offset="5%" stopColor={chart.series.cash} stopOpacity={0.5} />
+                      <stop offset="95%" stopColor={chart.series.cash} stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="exp" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#fb7185" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
+                      <stop offset="5%" stopColor={chart.series.expenses} stopOpacity={0.4} />
+                      <stop offset="95%" stopColor={chart.series.expenses} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                  <XAxis dataKey="month" stroke="rgba(255,255,255,0.4)" fontSize={12} tickLine={false} axisLine={false} />
-                  <YAxis stroke="rgba(255,255,255,0.4)" fontSize={12} tickLine={false} axisLine={false} width={64} />
-                  <ReTooltip
-                    contentStyle={{ background: "rgba(11,15,25,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 12 }}
-                    labelStyle={{ color: "#e2e8f0" }}
-                  />
-                  <Area type="monotone" dataKey="revenue" stroke="#38bdf8" fill="url(#rev)" strokeWidth={2} name="Invoiced" />
-                  <Area type="monotone" dataKey="cash" stroke="#34d399" fill="url(#cash)" strokeWidth={2} name="Cash received" />
-                  <Area type="monotone" dataKey="expenses" stroke="#fb7185" fill="url(#exp)" strokeWidth={2} name="Expenses" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={chart.grid} strokeOpacity={0.6} />
+                  <XAxis dataKey="month" stroke={chart.axis} fontSize={12} tickLine={false} axisLine={false} />
+                  <YAxis stroke={chart.axis} fontSize={12} tickLine={false} axisLine={false} width={64} />
+                  <ReTooltip contentStyle={chart.tooltip} labelStyle={{ color: chart.tooltip.color }} />
+                  <Area type="monotone" dataKey="revenue" stroke={chart.series.revenue} fill="url(#rev)" strokeWidth={2} name="Invoiced" />
+                  <Area type="monotone" dataKey="cash" stroke={chart.series.cash} fill="url(#cash)" strokeWidth={2} name="Cash received" />
+                  <Area type="monotone" dataKey="expenses" stroke={chart.series.expenses} fill="url(#exp)" strokeWidth={2} name="Expenses" />
                 </AreaChart>
               </ResponsiveContainer>
             )}
@@ -159,12 +156,10 @@ export default function DashboardPage() {
                 <PieChart>
                   <Pie data={data.charts.projectStatus} dataKey="count" nameKey="status" innerRadius={50} outerRadius={90} paddingAngle={3}>
                     {data.charts.projectStatus.map((entry, index) => (
-                      <Cell key={entry.status} fill={CHART_COLORS[index % CHART_COLORS.length]} stroke="transparent" />
+                      <Cell key={entry.status} fill={chart.categorical[index % chart.categorical.length]} stroke="transparent" />
                     ))}
                   </Pie>
-                  <ReTooltip
-                    contentStyle={{ background: "rgba(11,15,25,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 12 }}
-                  />
+                  <ReTooltip contentStyle={chart.tooltip} />
                 </PieChart>
               </ResponsiveContainer>
             )}
@@ -184,13 +179,11 @@ export default function DashboardPage() {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.charts.expenseByCategory} layout="vertical" margin={{ left: 12, right: 12 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-                  <XAxis type="number" stroke="rgba(255,255,255,0.4)" fontSize={12} tickLine={false} axisLine={false} />
-                  <YAxis type="category" dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={12} tickLine={false} axisLine={false} width={120} />
-                  <ReTooltip
-                    contentStyle={{ background: "rgba(11,15,25,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 12 }}
-                  />
-                  <Bar dataKey="total" fill="#8b5cf6" radius={[0, 6, 6, 0]} name="Total" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={chart.grid} strokeOpacity={0.6} horizontal={false} />
+                  <XAxis type="number" stroke={chart.axis} fontSize={12} tickLine={false} axisLine={false} />
+                  <YAxis type="category" dataKey="name" stroke={chart.axis} fontSize={12} tickLine={false} axisLine={false} width={120} />
+                  <ReTooltip contentStyle={chart.tooltip} />
+                  <Bar dataKey="total" fill={chart.categorical[0]} radius={[0, 6, 6, 0]} name="Total" />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -211,7 +204,7 @@ export default function DashboardPage() {
             ) : (
               data.recent.activities.slice(0, 7).map((entry) => (
                 <div key={entry.id} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-foreground">{entry.summary}</p>
                     <p className="text-xs text-muted-foreground">
@@ -239,7 +232,7 @@ export default function DashboardPage() {
               <p className="py-8 text-center text-sm text-muted-foreground">Nothing due soon.</p>
             ) : (
               data.deadlines.upcomingProjects.map((project) => (
-                <Link key={project.id} to={`/projects/${project.id}`} className="flex items-center justify-between gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-3 transition-colors hover:bg-white/5">
+                <Link key={project.id} to={`/projects/${project.id}`} className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{project.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{project.client}</p>
@@ -265,18 +258,18 @@ export default function DashboardPage() {
           <CardContent className="space-y-3">
             {data.deadlines.overdueInvoices.length === 0 ? (
               <div className="flex flex-col items-center gap-1 py-8 text-sm text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                <CheckCircle2 className="h-5 w-5 text-success" />
                 Everything is current.
               </div>
             ) : (
               data.deadlines.overdueInvoices.map((invoice) => (
-                <div key={invoice.invoiceNo} className="flex items-center justify-between gap-3 rounded-lg border border-white/5 bg-rose-500/5 p-3">
+                <div key={invoice.invoiceNo} className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-danger/10 p-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{invoice.invoiceNo}</p>
                     <p className="truncate text-xs text-muted-foreground">{invoice.client}</p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-sm font-medium text-rose-300">{formatMoney(invoice.balance, currency)}</p>
+                    <p className="text-sm font-medium text-danger">{formatMoney(invoice.balance, currency)}</p>
                     <p className="text-xs text-muted-foreground">{formatDate(invoice.dueDate)}</p>
                   </div>
                 </div>
@@ -303,7 +296,7 @@ export default function DashboardPage() {
                   <div key={member.id} className="space-y-1.5">
                     <div className="flex items-center justify-between text-sm">
                       <span className="truncate">{member.name}</span>
-                      <span className={cn("text-xs", member.openTasks > 0 ? "text-amber-300" : "text-muted-foreground")}>
+                      <span className={cn("text-xs", member.openTasks > 0 ? "text-warning" : "text-muted-foreground")}>
                         {member.openTasks} open / {member.totalTasks}
                       </span>
                     </div>

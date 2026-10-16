@@ -97,7 +97,7 @@ export default function PortalInvoices() {
         const invoice = row.original;
         const late = invoice.status !== "PAID" && isOverdue(invoice.dueDate);
         return (
-          <span className={late ? "text-rose-300" : undefined}>
+          <span className={late ? "text-danger" : undefined}>
             {formatDate(invoice.dueDate)}
             {late ? " · overdue" : ""}
           </span>
@@ -127,7 +127,7 @@ export default function PortalInvoices() {
       accessorFn: (invoice) => toNumber(invoice.amountPaid),
       header: "Paid",
       cell: ({ row }) => (
-        <span className="block text-right text-emerald-300">{formatMoney(row.original.amountPaid, row.original.currency)}</span>
+        <span className="block text-right text-success">{formatMoney(row.original.amountPaid, row.original.currency)}</span>
       ),
     },
     {
@@ -138,7 +138,7 @@ export default function PortalInvoices() {
         const invoice = row.original;
         const open = toNumber(invoice.balance) > 0;
         return (
-          <span className={`block text-right font-medium ${open ? "text-amber-300" : "text-muted-foreground"}`}>
+          <span className={`block text-right font-medium ${open ? "text-warning" : "text-muted-foreground"}`}>
             {formatMoney(invoice.balance, invoice.currency)}
           </span>
         );

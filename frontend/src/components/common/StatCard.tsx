@@ -22,11 +22,11 @@ export function StatCard({
   className?: string;
 }) {
   const toneRing: Record<string, string> = {
-    primary: "from-sky-500/20 to-transparent text-sky-300",
-    success: "from-emerald-500/20 to-transparent text-emerald-300",
-    warning: "from-amber-500/20 to-transparent text-amber-300",
-    danger: "from-rose-500/20 to-transparent text-rose-300",
-    accent: "from-violet-500/20 to-transparent text-violet-300",
+    primary: "from-primary/20 to-transparent text-primary",
+    success: "from-success/20 to-transparent text-success",
+    warning: "from-warning/20 to-transparent text-warning",
+    danger: "from-danger/20 to-transparent text-danger",
+    accent: "from-primary/20 to-transparent text-primary",
   };
 
   return (
@@ -47,7 +47,7 @@ export function StatCard({
               <div
                 className={cn(
                   "inline-flex items-center gap-1 text-xs font-medium",
-                  change >= 0 ? "text-emerald-400" : "text-rose-400",
+                  change >= 0 ? "text-success" : "text-danger",
                 )}
               >
                 {change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
@@ -56,7 +56,7 @@ export function StatCard({
             ) : null}
           </div>
           {icon ? (
-            <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5", toneRing[tone])}>
+            <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/40", toneRing[tone])}>
               {icon}
             </div>
           ) : null}

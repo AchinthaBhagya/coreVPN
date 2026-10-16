@@ -91,7 +91,7 @@ function RolePicker({
 }) {
   if (!roleOptions.length) {
     return (
-      <p className="rounded-lg border border-white/10 bg-white/5 p-3 text-xs text-muted-foreground">
+      <p className="rounded-lg border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
         Roles are unavailable for your account. Contact an administrator to assign roles.
       </p>
     );
@@ -101,7 +101,7 @@ function RolePicker({
       <Label className="text-xs font-medium text-muted-foreground">
         Roles<span className="ml-0.5 text-destructive">*</span>
       </Label>
-      <div className="space-y-2 rounded-lg border border-white/10 bg-white/5 p-3">
+      <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-3">
         {roleOptions.map((role) => (
           <label key={role.id} className="flex cursor-pointer items-center gap-2.5 text-sm">
             <Checkbox
@@ -188,7 +188,7 @@ export default function UserList() {
         accessorFn: (row) => `${row.firstName} ${row.lastName}`,
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted/60 text-[10px] font-semibold">
               {(row.original.firstName?.charAt(0) ?? "?").toUpperCase()}
               {(row.original.lastName?.charAt(0) ?? "").toUpperCase()}
             </span>

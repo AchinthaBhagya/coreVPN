@@ -272,7 +272,7 @@ function CategoriesDialog({ onClose }: { onClose: () => void }) {
               return (
                 <div
                   key={category.id}
-                  className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3"
+                  className="flex items-center justify-between gap-3 rounded-xl border border-border bg-muted/20 p-3"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{category.name}</p>
@@ -316,7 +316,7 @@ function CategoriesDialog({ onClose }: { onClose: () => void }) {
 
         {canUpdate ? (
           <form
-            className="space-y-3 border-t border-white/10 pt-4"
+            className="space-y-3 border-t border-border pt-4"
             onSubmit={(event) => {
               event.preventDefault();
               const trimmed = name.trim();

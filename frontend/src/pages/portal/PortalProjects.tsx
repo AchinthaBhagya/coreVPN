@@ -70,7 +70,7 @@ const columns: ColumnDef<Project, unknown>[] = [
         isOverdue(row.original.deadline) &&
         !OPEN_ENDED_STATUSES.includes(row.original.status);
       return (
-        <span className={cn("text-sm", late ? "text-rose-300" : "text-muted-foreground")}>
+        <span className={cn("text-sm", late ? "text-danger" : "text-muted-foreground")}>
           {formatDate(row.original.deadline)}
         </span>
       );

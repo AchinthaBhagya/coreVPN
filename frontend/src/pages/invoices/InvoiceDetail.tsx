@@ -187,7 +187,7 @@ function IssueDialog({ invoice, onClose }: { invoice: Invoice; onClose: () => vo
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/5 p-3">
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-muted/40 p-3">
           <div className="space-y-0.5">
             <p className="text-sm font-medium">Email a copy to the client</p>
             <p className="text-xs text-muted-foreground">
@@ -364,7 +364,7 @@ function InvoiceEditDialog({ invoice, onClose }: { invoice: Invoice; onClose: ()
               {fields.map((field, index) => {
                 const lineErrors = itemError?.[index];
                 return (
-                  <div key={field.id} className="space-y-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+                  <div key={field.id} className="space-y-3 rounded-xl border border-border bg-muted/20 p-3">
                     <div className="flex items-start gap-2">
                       <div className="min-w-0 flex-1 space-y-1.5">
                         <Label htmlFor={`edit-line-${field.id}-description`} className="text-xs text-muted-foreground">
@@ -449,7 +449,7 @@ function InvoiceEditDialog({ invoice, onClose }: { invoice: Invoice; onClose: ()
             <TextareaField form={form} name="terms" label="Terms (optional)" rows={3} />
           </div>
 
-          <div className="space-y-1.5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+          <div className="space-y-1.5 rounded-xl border border-border bg-muted/25 p-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Subtotal</span>
               <span>{formatMoney(totals.subtotal, currency)}</span>
@@ -462,7 +462,7 @@ function InvoiceEditDialog({ invoice, onClose }: { invoice: Invoice; onClose: ()
               <span className="text-muted-foreground">Tax ({toNumber(watchedTaxRate)}%)</span>
               <span>{formatMoney(totals.taxTotal, currency)}</span>
             </div>
-            <div className="flex items-center justify-between border-t border-white/10 pt-2 text-sm font-semibold">
+            <div className="flex items-center justify-between border-t border-border pt-2 text-sm font-semibold">
               <span>Total</span>
               <span>{formatMoney(totals.total, currency)}</span>
             </div>
@@ -779,7 +779,7 @@ export default function InvoiceDetail() {
             emptyTitle="No line items"
             emptyDescription="This invoice has no lines to show."
           >
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -820,7 +820,7 @@ export default function InvoiceDetail() {
             emptyTitle="No payments yet"
             emptyDescription="Record a payment when money is received — the balance only changes from confirmed payments."
           >
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -867,7 +867,7 @@ export default function InvoiceDetail() {
             emptyTitle="No refunds or credit notes"
             emptyDescription="Nothing has been refunded against this invoice."
           >
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -909,17 +909,17 @@ export default function InvoiceDetail() {
               <MoneyRow label="Subtotal" value={formatMoney(invoice.subtotal, currency)} />
               <MoneyRow label="Discount" value={`- ${formatMoney(invoice.discountTotal, currency)}`} />
               <MoneyRow label={`Tax (${toNumber(invoice.taxRate)}%)`} value={formatMoney(invoice.taxTotal, currency)} />
-              <Separator className="bg-white/10" />
+              <Separator className="bg-muted/60" />
               <MoneyRow label="Total" value={formatMoney(invoice.total, currency)} bold />
               <MoneyRow
                 label="Amount paid"
                 value={formatMoney(invoice.amountPaid, currency)}
-                tone={toNumber(invoice.amountPaid) > 0 ? "text-emerald-300" : ""}
+                tone={toNumber(invoice.amountPaid) > 0 ? "text-success" : ""}
               />
               <MoneyRow
                 label="Balance"
                 value={formatMoney(invoice.balance, currency)}
-                tone={outstanding ? "text-rose-300" : "text-muted-foreground"}
+                tone={outstanding ? "text-danger" : "text-muted-foreground"}
                 bold={outstanding}
               />
             </div>

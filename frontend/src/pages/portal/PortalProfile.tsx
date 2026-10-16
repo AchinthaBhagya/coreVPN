@@ -280,7 +280,7 @@ export default function PortalProfilePage() {
             <div className="space-y-3">
               {activityItems.slice(0, 10).map((entry) => (
                 <div key={entry.id} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-foreground">{entry.summary}</p>
                     <p className="text-xs text-muted-foreground">
@@ -289,7 +289,7 @@ export default function PortalProfilePage() {
                   </div>
                 </div>
               ))}
-              <p className="border-t border-white/10 pt-3 text-xs text-muted-foreground">
+              <p className="border-t border-border pt-3 text-xs text-muted-foreground">
                 Earliest shown: {formatDate(activityItems[activityItems.length - 1]?.createdAt)}
               </p>
             </div>

@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import VerifyEmail from "@/pages/VerifyEmail";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { api, ApiError } from "@/lib/api";
 
 vi.mock("@/lib/api", async () => {
@@ -17,9 +18,11 @@ const mockedApi = api as unknown as {
 
 function renderVerify(path: string) {
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <VerifyEmail />
-    </MemoryRouter>,
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[path]}>
+        <VerifyEmail />
+      </MemoryRouter>
+    </ThemeProvider>,
   );
 }
 

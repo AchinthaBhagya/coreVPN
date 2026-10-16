@@ -271,7 +271,7 @@ function TaskCommentsDialog({
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">Due</dt>
-                <dd className={isOverdue(task.dueDate) && task.status !== "DONE" ? "text-rose-300" : undefined}>
+                <dd className={isOverdue(task.dueDate) && task.status !== "DONE" ? "text-danger" : undefined}>
                   {formatDate(task.dueDate)}
                 </dd>
               </div>
@@ -282,13 +282,13 @@ function TaskCommentsDialog({
             <div className="space-y-3">
               <p className="text-sm font-medium text-foreground">Comments ({comments.length})</p>
               {comments.length === 0 ? (
-                <p className="rounded-lg border border-white/10 bg-white/[0.02] p-3 text-sm text-muted-foreground">
+                <p className="rounded-lg border border-border bg-muted/20 p-3 text-sm text-muted-foreground">
                   No comments yet.
                 </p>
               ) : (
                 <ul className="space-y-3">
                   {comments.map((comment) => (
-                    <li key={comment.id} className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
+                    <li key={comment.id} className="rounded-lg border border-border bg-muted/20 p-3">
                       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
                         <p className="text-xs font-medium text-foreground">
                           {comment.author ? `${comment.author.firstName} ${comment.author.lastName}` : "Team member"}
@@ -307,7 +307,7 @@ function TaskCommentsDialog({
               {canComment ? (
                 <form
                   onSubmit={form.handleSubmit((values) => commentMutation.mutate(values))}
-                  className="space-y-3 rounded-lg border border-white/10 bg-white/[0.02] p-3"
+                  className="space-y-3 rounded-lg border border-border bg-muted/20 p-3"
                   noValidate
                 >
                   <TextareaField form={form} name="body" label="Add a comment" rows={3} placeholder="Share an update with the team..." />
@@ -431,7 +431,7 @@ export default function TaskList() {
       cell: ({ row }) => {
         const overdue =
           isOverdue(row.original.dueDate) && !["DONE", "CANCELLED"].includes(row.original.status);
-        return <span className={overdue ? "text-rose-300" : undefined}>{formatDate(row.original.dueDate)}</span>;
+        return <span className={overdue ? "text-danger" : undefined}>{formatDate(row.original.dueDate)}</span>;
       },
     },
     {

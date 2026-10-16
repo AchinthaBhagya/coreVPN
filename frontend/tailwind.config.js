@@ -39,6 +39,23 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        // `danger` is an alias of destructive, used for inline status text.
+        danger: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -55,11 +72,23 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        glass: "var(--glass-shadow)",
+        glow: "0 0 0 1px hsl(var(--primary) / 0.25), 0 10px 34px -10px hsl(var(--primary) / 0.5)",
+        gold: "0 10px 30px -12px hsl(var(--primary) / 0.55)",
       },
       keyframes: {
         "accordion-down": {
@@ -82,6 +111,10 @@ export default {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" },
         },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -89,13 +122,15 @@ export default {
         "fade-in": "fade-in 0.2s ease-in",
         "fade-up": "fade-up 0.2s ease-out",
         "slide-in-right": "slide-in-right 0.2s ease-out",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
       },
       backdropBlur: {
         'xs': '2px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'glass-gradient': 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
+        'gold-gradient': 'linear-gradient(135deg, hsl(48 84% 64%) 0%, hsl(43 76% 50%) 45%, hsl(34 72% 42%) 100%)',
+        'gold-sheen': 'linear-gradient(90deg, transparent, hsl(43 76% 55% / 0.5), transparent)',
       },
     },
   },

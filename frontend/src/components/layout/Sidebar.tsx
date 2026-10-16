@@ -30,18 +30,19 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          "flex h-full flex-col border-r border-white/10 bg-[#070a12]/80 backdrop-blur-xl transition-[width] duration-300",
+          "flex h-full flex-col border-r border-border bg-card/80 backdrop-blur-xl transition-[width] duration-300",
           compact ? "w-[72px]" : "w-64",
         )}
       >
-        <div className={cn("flex h-16 items-center gap-2 border-b border-white/10 px-4", compact && "justify-center px-0")}>
-          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-[#0f0f0f] ring-1 ring-white/10">
+        <div className={cn("flex h-16 items-center gap-2 border-b border-border px-4", compact && "justify-center px-0")}>
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-[#0f0f0f] ring-1 ring-primary/30">
             <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
           </div>
           {!compact ? (
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight">
-                3xCodz<span className="text-muted-foreground"> Management</span>
+                <span className="gold-text">3xCodz</span>
+                <span className="text-muted-foreground"> Management</span>
               </p>
               <p className="truncate text-[11px] text-muted-foreground">{isClient ? "Client portal" : "Business suite"}</p>
             </div>
@@ -68,8 +69,8 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
                         "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                         compact && "justify-center px-0",
                         isActive
-                          ? "bg-gradient-to-r from-sky-500/20 to-violet-500/10 text-foreground"
-                          : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                          ? "bg-gradient-to-r from-primary/20 to-primary/5 text-foreground"
+                          : "text-muted-foreground hover:bg-muted/40 hover:text-foreground",
                       )
                     }
                   >
@@ -78,7 +79,7 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
                         {isActive ? (
                           <motion.span
                             layoutId={`nav-active-${variant}`}
-                            className="absolute inset-y-1 left-0 w-0.5 rounded-full bg-gradient-to-b from-sky-400 to-violet-500"
+                            className="absolute inset-y-1 left-0 w-0.5 rounded-full bg-gradient-to-b from-primary to-amber-500"
                           />
                         ) : null}
                         <item.icon className="h-4 w-4 shrink-0" />
@@ -101,12 +102,12 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
         </nav>
 
         {variant === "desktop" ? (
-          <div className="border-t border-white/10 p-3">
+          <div className="border-t border-border p-3">
             <button
               type="button"
               onClick={onToggle}
               className={cn(
-                "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground",
+                "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground",
                 compact && "justify-center px-0",
               )}
             >

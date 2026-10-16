@@ -258,7 +258,7 @@ function OrderStatusSelect({
   return (
     <Select value={order.status} onValueChange={(status) => onStatusChange(order, status)}>
       <SelectTrigger
-        className="h-8 w-40 border-white/10 bg-white/[0.03] text-xs"
+        className="h-8 w-40 border-border bg-muted/25 text-xs"
         disabled={disabled}
         onClick={(event) => event.stopPropagation()}
         aria-label={`Status for ${order.orderNo}`}
@@ -386,7 +386,7 @@ export default function OrderList() {
             onRetry={() => orders.refetch()}
           />
         ) : orders.isLoading ? (
-          <div className="overflow-hidden rounded-xl border border-white/10">
+          <div className="overflow-hidden rounded-xl border border-border">
             <TableSkeleton columns={6} />
           </div>
         ) : (orders.data?.items ?? []).length === 0 ? (
@@ -407,7 +407,7 @@ export default function OrderList() {
             }
           />
         ) : (
-          <div className="overflow-hidden rounded-xl border border-white/10">
+          <div className="overflow-hidden rounded-xl border border-border">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
@@ -481,7 +481,7 @@ export default function OrderList() {
                           )}
                         </TableCell>
                         <TableCell>
-                          <span className={overdue ? "text-sm font-medium text-rose-300" : "text-sm text-muted-foreground"}>
+                          <span className={overdue ? "text-sm font-medium text-danger" : "text-sm text-muted-foreground"}>
                             {formatDate(order.expectedDelivery)}
                           </span>
                         </TableCell>
@@ -524,7 +524,7 @@ export default function OrderList() {
                       </TableRow>
 
                       {expanded ? (
-                        <TableRow className="hover:bg-transparent bg-white/[0.03]">
+                        <TableRow className="hover:bg-transparent bg-muted/25">
                           <TableCell colSpan={8}>
                             <div className="grid gap-5 py-1 sm:grid-cols-3">
                               <div className="space-y-1 sm:col-span-2">

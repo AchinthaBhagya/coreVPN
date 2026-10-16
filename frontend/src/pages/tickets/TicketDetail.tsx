@@ -242,10 +242,10 @@ export default function TicketDetail() {
               <div className="space-y-6 lg:col-span-2">
                 <SectionCard title="Conversation" description="The original request and every reply, oldest first.">
                   <div className="space-y-4">
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                    <div className="rounded-xl border border-border bg-muted/25 p-4">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold">
+                          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted/60 text-[10px] font-semibold">
                             {initials(ticket.client?.firstName, ticket.client?.lastName)}
                           </span>
                           <span className="text-sm font-medium">{clientDisplayName(ticket.client)}</span>
@@ -268,15 +268,15 @@ export default function TicketDetail() {
                             key={message.id}
                             className={`rounded-xl border p-4 ${
                               message.isInternal
-                                ? "border-amber-500/30 bg-amber-500/[0.06]"
+                                ? "border-warning/30 bg-warning/10"
                                 : fromClient
-                                  ? "border-sky-500/20 bg-sky-500/[0.05] lg:ml-12"
-                                  : "border-white/10 bg-white/[0.03]"
+                                  ? "border-info/20 bg-info/10 lg:ml-12"
+                                  : "border-border bg-muted/25"
                             }`}
                           >
                             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                               <div className="flex flex-wrap items-center gap-2">
-                                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[10px] font-semibold">
+                                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted/60 text-[10px] font-semibold">
                                   {initials(message.author?.firstName, message.author?.lastName)}
                                 </span>
                                 <span className="text-sm font-medium">{personName(message.author)}</span>
@@ -373,8 +373,8 @@ export default function TicketDetail() {
                 </SectionCard>
 
                 {ticket.status === "CLOSED" ? (
-                  <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-muted-foreground">
-                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                  <div className="flex items-start gap-3 rounded-xl border border-border bg-muted/25 p-4 text-sm text-muted-foreground">
+                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
                     <p>This ticket is closed. Further replies are disabled in the client portal.</p>
                   </div>
                 ) : null}

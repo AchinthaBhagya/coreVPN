@@ -379,7 +379,7 @@ function RoleDialog({
               </div>
             </div>
 
-            <div className="max-h-[45vh] space-y-4 overflow-y-auto rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="max-h-[45vh] space-y-4 overflow-y-auto rounded-xl border border-border bg-muted/20 p-4">
               {groups.length === 0 ? (
                 <p className="py-6 text-center text-sm text-muted-foreground">No permissions available.</p>
               ) : (
@@ -388,7 +388,7 @@ function RoleDialog({
                   const allSelected = selectedCount === items.length;
                   return (
                     <div key={module} className="space-y-2">
-                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-2">
                         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                           {humanize(module)}{" "}
                           <span className="normal-case tracking-normal">
@@ -409,7 +409,7 @@ function RoleDialog({
                         {items.map((permission) => (
                           <label
                             key={permission.id}
-                            className="flex cursor-pointer items-start gap-2.5 rounded-lg border border-white/10 bg-white/5 p-2.5"
+                            className="flex cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-muted/40 p-2.5"
                           >
                             <Checkbox
                               checked={permissions.includes(permission.name)}

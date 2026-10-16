@@ -212,7 +212,7 @@ export function ProjectDialog({
             control={form.control}
             name="progress"
             render={({ field }) => (
-              <div className="space-y-2 rounded-lg border border-white/10 bg-white/5 p-3">
+              <div className="space-y-2 rounded-lg border border-border bg-muted/40 p-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-medium text-muted-foreground">Progress</span>
                   <span className="text-foreground">{field.value}%</span>
@@ -310,7 +310,7 @@ export default function ProjectList() {
       cell: ({ row }) => {
         const overdue =
           isOverdue(row.original.deadline) && !["COMPLETED", "CANCELLED"].includes(row.original.status);
-        return <span className={overdue ? "text-rose-300" : undefined}>{formatDate(row.original.deadline)}</span>;
+        return <span className={overdue ? "text-danger" : undefined}>{formatDate(row.original.deadline)}</span>;
       },
     },
     {
@@ -336,7 +336,7 @@ export default function ProjectList() {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-rose-300 hover:text-rose-200"
+              className="h-8 w-8 text-danger hover:text-danger/80"
               aria-label="Archive project"
               onClick={() => setDeleteTarget(row.original)}
             >

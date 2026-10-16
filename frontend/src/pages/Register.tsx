@@ -12,6 +12,7 @@ import { api, ApiError } from "@/lib/api";
 import { passwordPolicy, passwordSchema } from "@/lib/validation";
 import { fieldErrors } from "@/lib/errors";
 import { GoogleMark } from "@/components/common/GoogleMark";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { toast } from "@/hooks/use-toast";
 
 const registerSchema = z
@@ -109,20 +110,23 @@ export default function Register() {
   const googleHref = `/api/auth/google?type=${accountType}`;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#05070d] px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <div className="absolute right-4 top-4 z-10">
+        <ThemeToggle />
+      </div>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-2xl sm:p-10"
+        className="relative w-full max-w-lg overflow-hidden rounded-3xl glass sheen p-8 sm:p-10"
       >
         <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-white/10">
+          <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-border">
             <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
           </div>
           <div>
@@ -133,8 +137,8 @@ export default function Register() {
 
         {done ? (
           <div className="space-y-5">
-            <div className="flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+            <div className="flex items-start gap-3 rounded-2xl border border-success/30 bg-success/10 p-4">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
               <div className="space-y-1 text-sm">
                 <p className="font-medium">
                   {done.accountType === "STAFF" ? "Account created" : "Almost there"}
@@ -165,11 +169,11 @@ export default function Register() {
                     onClick={() => setAccountType(type.value)}
                     className={`rounded-2xl border p-3 text-left transition ${
                       active
-                        ? "border-sky-400/60 bg-sky-500/10 ring-1 ring-sky-400/40"
-                        : "border-white/10 bg-white/[0.02] hover:border-white/20"
+                        ? "border-primary/50 bg-info/10 ring-1 ring-primary/40"
+                        : "border-border bg-muted/20 hover:border-border"
                     }`}
                   >
-                    <Icon className={`mb-2 h-4 w-4 ${active ? "text-sky-300" : "text-muted-foreground"}`} />
+                    <Icon className={`mb-2 h-4 w-4 ${active ? "text-info" : "text-muted-foreground"}`} />
                     <p className="text-sm font-medium">{type.title}</p>
                     <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">{type.description}</p>
                   </button>
@@ -272,9 +276,9 @@ export default function Register() {
             {googleEnabled ? (
               <>
                 <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-wide text-muted-foreground">
-                  <span className="h-px flex-1 bg-white/10" />
+                  <span className="h-px flex-1 bg-muted/60" />
                   or
-                  <span className="h-px flex-1 bg-white/10" />
+                  <span className="h-px flex-1 bg-muted/60" />
                 </div>
                 <Button asChild variant="outline" className="w-full">
                   <a href={googleHref}>

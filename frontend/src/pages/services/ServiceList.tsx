@@ -364,7 +364,7 @@ export default function ServiceList() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-amber-300 hover:text-amber-200"
+                className="h-8 w-8 text-warning hover:text-warning/80"
                 title="Deactivate service"
                 disabled={statusMutation.isPending}
                 onClick={() => statusMutation.mutate({ id: row.original.id, status: "INACTIVE" })}
@@ -376,7 +376,7 @@ export default function ServiceList() {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-emerald-300 hover:text-emerald-200"
+                className="h-8 w-8 text-success hover:text-success/80"
                 title="Activate service"
                 disabled={statusMutation.isPending}
                 onClick={() => statusMutation.mutate({ id: row.original.id, status: "ACTIVE" })}

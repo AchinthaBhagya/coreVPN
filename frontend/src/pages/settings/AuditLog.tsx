@@ -131,7 +131,7 @@ function DetailsCell({ details }: { details: unknown }) {
         {open ? "Hide" : "Details"}
       </Button>
       {open ? (
-        <pre className="mt-1 max-h-64 overflow-auto rounded-lg border border-white/10 bg-black/40 p-2 text-xs leading-relaxed text-muted-foreground">
+        <pre className="mt-1 max-h-64 overflow-auto rounded-lg border border-border bg-muted/40 p-2 text-xs leading-relaxed text-muted-foreground">
           {text}
         </pre>
       ) : null}

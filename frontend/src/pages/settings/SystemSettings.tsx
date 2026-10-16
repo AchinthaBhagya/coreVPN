@@ -277,7 +277,7 @@ export default function SystemSettings() {
         >
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {runtimeItems.map((item) => (
-              <div key={item.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <div key={item.label} className="rounded-xl border border-border bg-muted/25 p-4">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   {item.icon}
                   <span className="text-xs font-medium uppercase tracking-wide">{item.label}</span>
@@ -379,13 +379,13 @@ export default function SystemSettings() {
           <div
             className={cn(
               "rounded-xl border p-4 transition-colors",
-              maintenance ? "border-amber-500/50 bg-amber-500/10" : "border-white/10 bg-white/5",
+              maintenance ? "border-warning/50 bg-warning/10" : "border-border bg-muted/40",
             )}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1">
                 <p className="flex items-center gap-2 text-sm font-medium text-foreground">
-                  <AlertTriangle className={cn("h-4 w-4", maintenance ? "text-amber-300" : "text-muted-foreground")} />
+                  <AlertTriangle className={cn("h-4 w-4", maintenance ? "text-warning" : "text-muted-foreground")} />
                   Enable maintenance mode
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -400,11 +400,11 @@ export default function SystemSettings() {
                 }
                 disabled={!canEdit}
                 aria-label="Toggle maintenance mode"
-                className={maintenance ? "data-[state=checked]:bg-amber-500" : undefined}
+                className={maintenance ? "data-[state=checked]:bg-warning" : undefined}
               />
             </div>
             {maintenance ? (
-              <p className="mt-3 flex items-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-200">
+              <p className="mt-3 flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-xs font-medium text-warning">
                 <AlertTriangle className="h-3.5 w-3.5" />
                 Maintenance mode is currently ON.
               </p>

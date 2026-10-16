@@ -214,7 +214,7 @@ export default function PortalDashboard() {
                 <Link
                   key={project.id}
                   to={`/portal/projects/${project.id}`}
-                  className="block rounded-lg border border-white/5 bg-white/[0.02] p-3 transition-colors hover:bg-white/5"
+                  className="block rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
@@ -262,7 +262,7 @@ export default function PortalDashboard() {
                   <Link
                     key={invoice.id}
                     to={`/portal/invoices/${invoice.id}`}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-3 transition-colors hover:bg-white/5"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{invoice.invoiceNo}</p>
@@ -303,7 +303,7 @@ export default function PortalDashboard() {
             ) : (
               activityFeed.map((entry) => (
                 <div key={entry.id} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-foreground">{entry.summary}</p>
                     <p className="truncate text-xs text-muted-foreground">{entry.meta}</p>
@@ -323,7 +323,7 @@ export default function PortalDashboard() {
             {canAny("portal.tickets.view", "portal.tickets.create") && latestTicket ? (
               <Link
                 to={`/portal/tickets/${latestTicket.id}`}
-                className="mb-1 rounded-lg border border-white/5 bg-white/[0.02] p-3 transition-colors hover:bg-white/5"
+                className="mb-1 rounded-lg border border-border/60 bg-muted/20 p-3 transition-colors hover:bg-muted/40"
               >
                 <p className="truncate text-xs text-muted-foreground">Latest ticket</p>
                 <div className="flex items-center justify-between gap-2">

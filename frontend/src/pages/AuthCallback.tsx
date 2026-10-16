@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Loader2, ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const ERROR_MESSAGES: Record<string, string> = {
   google_not_configured: "Google sign-in is not configured yet. Please use your email and password.",
@@ -69,22 +70,25 @@ export default function AuthCallback() {
   }, []);
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#05070d] px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <div className="absolute right-4 top-4 z-10">
+        <ThemeToggle />
+      </div>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center shadow-2xl backdrop-blur-2xl"
+        className="relative w-full max-w-md overflow-hidden rounded-3xl glass sheen p-8 text-center"
       >
         {loading && !error ? (
           <div className="space-y-4">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-sky-500/30 bg-sky-500/10">
-              <Loader2 className="h-7 w-7 animate-spin text-sky-400" />
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-info/30 bg-info/10">
+              <Loader2 className="h-7 w-7 animate-spin text-info" />
             </div>
             <div className="space-y-1">
               <h1 className="text-xl font-semibold">Finishing sign-in</h1>

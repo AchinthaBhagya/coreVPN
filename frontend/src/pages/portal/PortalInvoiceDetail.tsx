@@ -114,7 +114,7 @@ export default function PortalInvoiceDetail() {
             emptyTitle="No line items"
             emptyDescription="This invoice has no line items."
           >
-            <div className="overflow-hidden rounded-xl border border-white/10">
+            <div className="overflow-hidden rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -149,7 +149,7 @@ export default function PortalInvoiceDetail() {
             emptyTitle="No payments yet"
             emptyDescription="Once a payment is recorded it will appear here."
           >
-            <div className="overflow-hidden rounded-xl border border-white/10">
+            <div className="overflow-hidden rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -167,7 +167,7 @@ export default function PortalInvoiceDetail() {
                       <TableCell>{formatDate(payment.paidAt)}</TableCell>
                       <TableCell>{humanize(payment.method)}</TableCell>
                       <TableCell className="text-muted-foreground">{payment.reference || "-"}</TableCell>
-                      <TableCell className="text-right text-emerald-300">
+                      <TableCell className="text-right text-success">
                         {formatMoney(payment.amount, payment.currency)}
                       </TableCell>
                     </TableRow>
@@ -221,12 +221,12 @@ export default function PortalInvoiceDetail() {
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Paid</span>
-              <span className="text-emerald-300">{formatMoney(invoice.amountPaid, currency)}</span>
+              <span className="text-success">{formatMoney(invoice.amountPaid, currency)}</span>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-muted-foreground">Balance due</span>
-              <span className={`text-lg font-semibold ${balanceOpen ? "text-amber-300" : "text-emerald-300"}`}>
+              <span className={`text-lg font-semibold ${balanceOpen ? "text-warning" : "text-success"}`}>
                 {formatMoney(invoice.balance, currency)}
               </span>
             </div>
@@ -236,10 +236,10 @@ export default function PortalInvoiceDetail() {
           </SectionCard>
 
           {isPaid ? (
-            <Alert className="border-emerald-500/30 bg-emerald-500/10">
-              <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-              <AlertTitle className="text-emerald-200">Paid in full</AlertTitle>
-              <AlertDescription className="text-emerald-200/80">
+            <Alert className="border-success/30 bg-success/10">
+              <CheckCircle2 className="h-4 w-4 text-success" />
+              <AlertTitle className="text-success">Paid in full</AlertTitle>
+              <AlertDescription className="text-success/80">
                 This invoice has no outstanding balance. A record of every payment is listed above.
               </AlertDescription>
             </Alert>
@@ -250,10 +250,10 @@ export default function PortalInvoiceDetail() {
               <AlertDescription>This invoice was refunded. Any credit is reflected in the totals above.</AlertDescription>
             </Alert>
           ) : balanceOpen ? (
-            <Alert className="border-amber-500/30 bg-amber-500/10">
-              <AlertTriangle className="h-4 w-4 text-amber-300" />
-              <AlertTitle className="text-amber-200">Outstanding balance</AlertTitle>
-              <AlertDescription className="space-y-2 text-amber-200/80">
+            <Alert className="border-warning/30 bg-warning/10">
+              <AlertTriangle className="h-4 w-4 text-warning" />
+              <AlertTitle className="text-warning">Outstanding balance</AlertTitle>
+              <AlertDescription className="space-y-2 text-warning/80">
                 <p>
                   {invoice.notes
                     ? "Settle this invoice using the notes above, then share the payment reference through a support ticket so it can be matched to your account."

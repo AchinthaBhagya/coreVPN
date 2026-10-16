@@ -19,12 +19,12 @@ export function AppLayout() {
   };
 
   return (
-    <div className="relative flex min-h-screen bg-[#05070d] text-foreground">
-      {/* Ambient gradient backdrop */}
+    <div className="relative flex min-h-screen bg-background text-foreground">
+      {/* Ambient matte-black & gold backdrop */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-violet-600/10 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
       </div>
 
       <div className="hidden lg:block">

@@ -202,7 +202,7 @@ export function CheckboxField<T extends FieldValues>({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <label className={cn("flex cursor-pointer items-start gap-3 rounded-lg border border-white/10 bg-white/5 p-3", className)}>
+        <label className={cn("flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-muted/40 p-3", className)}>
           <Checkbox checked={Boolean(field.value)} onCheckedChange={(checked) => field.onChange(Boolean(checked))} className="mt-0.5" />
           <span className="space-y-0.5">
             <span className="block text-sm font-medium text-foreground">{label}</span>
@@ -232,7 +232,7 @@ export function SwitchField<T extends FieldValues>({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <div className={cn("flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/5 p-3", className)}>
+        <div className={cn("flex items-center justify-between gap-4 rounded-lg border border-border bg-muted/40 p-3", className)}>
           <div className="space-y-0.5">
             <p className="text-sm font-medium text-foreground">{label}</p>
             {description ? <p className="text-xs text-muted-foreground">{description}</p> : null}

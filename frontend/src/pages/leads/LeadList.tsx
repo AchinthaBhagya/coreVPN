@@ -419,7 +419,7 @@ export default function LeadList() {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-rose-300 hover:text-rose-200"
+              className="h-8 w-8 text-danger hover:text-danger/80"
               title="Delete lead"
               onClick={() => setDeleting(row.original)}
             >

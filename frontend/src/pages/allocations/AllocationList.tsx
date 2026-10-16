@@ -319,7 +319,7 @@ function NewRuleDialog({
             </div>
 
             {fields.map((field, index) => (
-              <div key={field.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+              <div key={field.id} className="rounded-xl border border-border bg-muted/20 p-3">
                 <div className="mb-2 flex items-center justify-between gap-3">
                   <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Line {index + 1}</p>
                   <Button
@@ -372,8 +372,8 @@ function NewRuleDialog({
               <p
                 className={
                   percentBalanced
-                    ? "text-xs font-medium text-emerald-400"
-                    : "text-xs font-medium text-amber-300"
+                    ? "text-xs font-medium text-success"
+                    : "text-xs font-medium text-warning"
                 }
               >
                 {percentBalanced
@@ -606,7 +606,7 @@ function PreviewDetails({ preview, canApprove }: { preview: PreviewResponse; can
         />
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-muted/25 p-4">
         <div>
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Unallocated remainder</p>
           <p className="text-lg font-semibold tabular-nums">{formatMoney(preview.unallocated, preview.currency)}</p>
@@ -639,7 +639,7 @@ function PreviewDetails({ preview, canApprove }: { preview: PreviewResponse; can
         />
       </div>
 
-      <div className="space-y-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <div className="space-y-3 rounded-xl border border-border bg-muted/25 p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <p className="text-sm font-medium">
@@ -659,9 +659,9 @@ function PreviewDetails({ preview, canApprove }: { preview: PreviewResponse; can
           </Button>
         </div>
         {!canApprove ? (
-          <p className="text-xs text-amber-300">You need the allocations.approve permission to commit an allocation.</p>
+          <p className="text-xs text-warning">You need the allocations.approve permission to commit an allocation.</p>
         ) : !reconciles ? (
-          <p className="text-xs text-amber-300">The preview must reconcile (remainder 0.00) before it can be committed.</p>
+          <p className="text-xs text-warning">The preview must reconcile (remainder 0.00) before it can be committed.</p>
         ) : null}
       </div>
 

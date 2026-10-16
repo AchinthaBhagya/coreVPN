@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import Register from "@/pages/Register";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { api } from "@/lib/api";
 
 vi.mock("@/lib/api", async () => {
@@ -17,9 +18,11 @@ const mockedApi = api as unknown as {
 
 function renderRegister() {
   return render(
-    <MemoryRouter>
-      <Register />
-    </MemoryRouter>,
+    <ThemeProvider>
+      <MemoryRouter>
+        <Register />
+      </MemoryRouter>
+    </ThemeProvider>,
   );
 }
 

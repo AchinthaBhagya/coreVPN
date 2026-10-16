@@ -225,7 +225,7 @@ export default function PayoutList() {
             <Button
               size="sm"
               variant="ghost"
-              className="text-rose-300"
+              className="text-danger"
               disabled={pendingMutation}
               onClick={() => {
                 setCancelReason("");
@@ -602,7 +602,7 @@ function NewPayoutDialog({ onClose }: { onClose: () => void }) {
             </div>
 
             {!userId ? (
-              <p className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-6 text-center text-xs text-muted-foreground">
+              <p className="rounded-xl border border-border bg-muted/20 px-4 py-6 text-center text-xs text-muted-foreground">
                 Pick a member to list their approved earnings.
               </p>
             ) : earningsQuery.isLoading ? (
@@ -641,7 +641,7 @@ function NewPayoutDialog({ onClose }: { onClose: () => void }) {
                           toggle(earning.id);
                         }
                       }}
-                      className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 transition-colors hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-border bg-muted/20 px-3 py-2 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     >
                       <span className="flex min-w-0 items-center gap-3">
                         <Checkbox
@@ -664,7 +664,7 @@ function NewPayoutDialog({ onClose }: { onClose: () => void }) {
                   );
                 })}
 
-                <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-muted/25 px-4 py-3">
                   <div>
                     <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Payout total</p>
                     <p className="text-lg font-semibold tabular-nums">{formatMoney(total, totalCurrency)}</p>
@@ -725,7 +725,7 @@ function NewPayoutDialog({ onClose }: { onClose: () => void }) {
             />
           </div>
 
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-muted/20 px-4 py-3">
             <div>
               <Label htmlFor="payout-submit" className="text-sm font-medium">
                 Submit for approval
@@ -743,7 +743,7 @@ function NewPayoutDialog({ onClose }: { onClose: () => void }) {
           </div>
 
           {!userId || selectedIds.length === 0 ? (
-            <p className="text-xs font-medium text-amber-300">
+            <p className="text-xs font-medium text-warning">
               Pick a member and at least one approved earning to create the payout.
             </p>
           ) : null}

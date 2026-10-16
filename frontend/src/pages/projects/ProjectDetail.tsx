@@ -178,7 +178,7 @@ function MilestonesTab({ id, milestones, canUpdate }: { id: string; milestones: 
       <div className="space-y-4">
         {canUpdate ? (
           <form
-            className="flex flex-col gap-2 rounded-lg border border-white/10 bg-white/[0.02] p-3 sm:flex-row"
+            className="flex flex-col gap-2 rounded-lg border border-border bg-muted/20 p-3 sm:flex-row"
             onSubmit={(event) => {
               event.preventDefault();
               if (title.trim()) addMutation.mutate();
@@ -212,7 +212,7 @@ function MilestonesTab({ id, milestones, canUpdate }: { id: string; milestones: 
             className="py-10"
           />
         ) : (
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-border/70">
             {milestones.map((milestone) => (
               <li key={milestone.id} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0 space-y-1">
@@ -250,7 +250,7 @@ function MilestonesTab({ id, milestones, canUpdate }: { id: string; milestones: 
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 text-rose-300 hover:text-rose-200"
+                      className="h-9 w-9 text-danger hover:text-danger/80"
                       aria-label={`Delete ${milestone.title}`}
                       disabled={deleteMutation.isPending}
                       onClick={() => deleteMutation.mutate(milestone.id)}
@@ -313,7 +313,7 @@ function ChecklistTab({ id, items, canUpdate }: { id: string; items: ChecklistIt
 
         {canUpdate ? (
           <form
-            className="flex flex-col gap-2 rounded-lg border border-white/10 bg-white/[0.02] p-3 sm:flex-row"
+            className="flex flex-col gap-2 rounded-lg border border-border bg-muted/20 p-3 sm:flex-row"
             onSubmit={(event) => {
               event.preventDefault();
               if (title.trim()) addMutation.mutate();
@@ -336,7 +336,7 @@ function ChecklistTab({ id, items, canUpdate }: { id: string; items: ChecklistIt
         {items.length === 0 ? (
           <EmptyState title="Nothing on the checklist" description="Items added here help track delivery quality." className="py-10" />
         ) : (
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-border/70">
             {items.map((item) => (
               <li key={item.id} className="flex items-center justify-between gap-3 py-2.5">
                 <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3">
@@ -354,7 +354,7 @@ function ChecklistTab({ id, items, canUpdate }: { id: string; items: ChecklistIt
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 shrink-0 text-rose-300 hover:text-rose-200"
+                    className="h-8 w-8 shrink-0 text-danger hover:text-danger/80"
                     aria-label={`Remove ${item.title}`}
                     disabled={deleteMutation.isPending}
                     onClick={() => deleteMutation.mutate(item.id)}
@@ -407,7 +407,7 @@ function MembersTab({ id, members, canAssign }: { id: string; members: ProjectMe
     <SectionCard title="Team" description="Members with access to this project.">
       <div className="space-y-4">
         {canAssign ? (
-          <div className="flex flex-col gap-2 rounded-lg border border-white/10 bg-white/[0.02] p-3 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-2 rounded-lg border border-border bg-muted/20 p-3 sm:flex-row sm:items-center">
             <Select value={selected} onValueChange={setSelected}>
               <SelectTrigger className="flex-1" aria-label="Choose a member to add">
                 <SelectValue placeholder={assignable.isLoading ? "Loading directory..." : "Choose a user..."} />
@@ -437,11 +437,11 @@ function MembersTab({ id, members, canAssign }: { id: string; members: ProjectMe
         {members.length === 0 ? (
           <EmptyState title="No members yet" description={canAssign ? "Add the people working on this project." : "No one has been assigned."} className="py-10" />
         ) : (
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-border/70">
             {members.map((member) => (
               <li key={member.id} className="flex items-center justify-between gap-3 py-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs font-medium">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-muted/40 text-xs font-medium">
                     {initials(member.user?.firstName, member.user?.lastName)}
                   </div>
                   <div className="min-w-0">
@@ -460,7 +460,7 @@ function MembersTab({ id, members, canAssign }: { id: string; members: ProjectMe
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-rose-300 hover:text-rose-200"
+                      className="h-8 w-8 text-danger hover:text-danger/80"
                       aria-label="Remove member"
                       disabled={removeMutation.isPending}
                       onClick={() => removeMutation.mutate(member.userId)}
@@ -549,7 +549,7 @@ function UpdatesTab({ id, canUpdate }: { id: string; canUpdate: boolean }) {
         ) : (
           <ul className="space-y-4">
             {updates.data.map((update) => (
-              <li key={update.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <li key={update.id} className="rounded-xl border border-border bg-muted/20 p-4">
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                   <div className="flex min-w-0 items-center gap-2">
                     <p className="truncate text-sm font-medium text-foreground">{update.title || "Project update"}</p>
@@ -634,14 +634,14 @@ function RevisionsTab({ id, canUpdate }: { id: string; canUpdate: boolean }) {
       ) : (
         <ul className="space-y-3">
           {revisions.data.map((revision) => (
-            <li key={revision.id} className="space-y-2 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <li key={revision.id} className="space-y-2 rounded-xl border border-border bg-muted/20 p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="truncate text-sm font-medium text-foreground">{revision.title}</p>
                 <StatusBadge status={revision.status} />
               </div>
               <p className="whitespace-pre-wrap text-sm text-muted-foreground">{revision.description}</p>
               {revision.response ? (
-                <p className="rounded-lg border border-white/10 bg-white/5 p-2 text-xs text-muted-foreground">
+                <p className="rounded-lg border border-border bg-muted/40 p-2 text-xs text-muted-foreground">
                   Response: {revision.response}
                 </p>
               ) : null}
@@ -762,7 +762,7 @@ function TasksTab({ projectId }: { projectId: string }) {
       ) : (tasks.data?.items ?? []).length === 0 ? (
         <EmptyState title="No tasks yet" description="Tasks created for this project will show up here." className="py-10" />
       ) : (
-        <ul className="divide-y divide-white/5">
+        <ul className="divide-y divide-border/70">
           {tasks.data?.items.map((task) => (
             <li key={task.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
               <div className="min-w-0 space-y-1">

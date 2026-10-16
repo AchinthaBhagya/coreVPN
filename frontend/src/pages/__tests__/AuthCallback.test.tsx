@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import AuthCallback from "@/pages/AuthCallback";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const { refreshMock } = vi.hoisted(() => ({ refreshMock: vi.fn() }));
 
@@ -11,13 +12,15 @@ vi.mock("@/context/AuthContext", () => ({
 
 function renderCallback(path: string) {
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <Routes>
-        <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/dashboard" element={<div>DASHBOARD_OK</div>} />
-        <Route path="/portal" element={<div>PORTAL_OK</div>} />
-      </Routes>
-    </MemoryRouter>,
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[path]}>
+        <Routes>
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/dashboard" element={<div>DASHBOARD_OK</div>} />
+          <Route path="/portal" element={<div>PORTAL_OK</div>} />
+        </Routes>
+      </MemoryRouter>
+    </ThemeProvider>,
   );
 }
 

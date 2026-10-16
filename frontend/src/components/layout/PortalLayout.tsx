@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { NotificationBell } from "@/components/layout/NotificationBell";
 import { useAuth } from "@/context/AuthContext";
@@ -17,10 +18,10 @@ export function PortalLayout() {
   const { user } = useAuth();
 
   return (
-    <div className="relative flex min-h-screen bg-[#05070d] text-foreground">
+    <div className="relative flex min-h-screen bg-background text-foreground">
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-600/10 blur-3xl" />
+        <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
       </div>
 
       <div className="hidden lg:block">
@@ -30,14 +31,14 @@ export function PortalLayout() {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/10 bg-[#070a12]/70 px-4 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/70 px-4 backdrop-blur-xl">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 border-white/10 bg-[#070a12] p-0">
+            <SheetContent side="left" className="w-64 border-border bg-card p-0">
               <Sidebar collapsed={false} onToggle={() => undefined} variant="mobile" onNavigate={() => setMobileOpen(false)} />
             </SheetContent>
           </Sheet>
@@ -46,6 +47,7 @@ export function PortalLayout() {
             <p className="text-xs text-muted-foreground">Projects, invoices and support</p>
           </div>
           <div className="ml-auto flex items-center gap-1">
+            <ThemeToggle />
             <NotificationBell />
             <UserMenu onNavigate={(path) => navigate(path)} />
           </div>

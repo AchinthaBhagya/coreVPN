@@ -421,7 +421,7 @@ export default function PaymentList() {
             size="sm"
             variant="outline"
             onClick={() => list.setFilter("includeVoid", includeVoid ? "false" : "true")}
-            className={includeVoid ? "border-white/15 bg-white/10 text-foreground" : "text-muted-foreground"}
+            className={includeVoid ? "border-border bg-muted/60 text-foreground" : "text-muted-foreground"}
           >
             Include voided
           </Button>

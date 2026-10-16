@@ -182,7 +182,7 @@ function plain(value: CellValue): ReactNode {
 /** Money cell coloured by sign (net columns). */
 function signedMoney(value: CellValue, currency: string): ReactNode {
   const amount = toNumber(value);
-  return <span className={amount >= 0 ? "text-emerald-300" : "text-rose-300"}>{formatMoney(amount, currency)}</span>;
+  return <span className={amount >= 0 ? "text-success" : "text-danger"}>{formatMoney(amount, currency)}</span>;
 }
 
 /** Secondary table used by a few reports (payouts, breakdowns). */
@@ -546,14 +546,14 @@ function InvoiceAgingReport({ params }: ReportProps) {
     {
       header: "Balance",
       accessor: (row) => toNumber(row.balance),
-      cell: (row) => <span className="font-medium text-amber-300">{formatMoney(row.balance, currency)}</span>,
+      cell: (row) => <span className="font-medium text-warning">{formatMoney(row.balance, currency)}</span>,
     },
     {
       header: "Days overdue",
       accessor: (row) => row.daysOverdue,
       cell: (row) =>
         row.daysOverdue > 0 ? (
-          <span className="text-rose-300">{row.daysOverdue}</span>
+          <span className="text-danger">{row.daysOverdue}</span>
         ) : (
           <span className="text-muted-foreground">{row.daysOverdue}</span>
         ),
@@ -731,7 +731,7 @@ function TeamWorkloadReport({ params }: ReportProps) {
       accessor: (row) => row.openTasks,
       cell: (row) =>
         row.openTasks > 0 ? (
-          <span className="font-medium text-amber-300">{row.openTasks}</span>
+          <span className="font-medium text-warning">{row.openTasks}</span>
         ) : (
           <span className="text-muted-foreground">0</span>
         ),
@@ -913,12 +913,12 @@ function CashFlowReport({ params }: ReportProps) {
     {
       header: "Money in",
       accessor: (row) => toNumber(row.inflow),
-      cell: (row) => <span className="text-emerald-300">{formatMoney(row.inflow, currency)}</span>,
+      cell: (row) => <span className="text-success">{formatMoney(row.inflow, currency)}</span>,
     },
     {
       header: "Money out",
       accessor: (row) => toNumber(row.outflow),
-      cell: (row) => <span className="text-rose-300">{formatMoney(row.outflow, currency)}</span>,
+      cell: (row) => <span className="text-danger">{formatMoney(row.outflow, currency)}</span>,
     },
     {
       header: "Net",
@@ -972,7 +972,7 @@ function ClientHistoryReport({ params }: ReportProps) {
     {
       header: "Outstanding",
       accessor: (row) => toNumber(row.outstanding),
-      cell: (row) => <span className="text-amber-300">{formatMoney(row.outstanding, currency)}</span>,
+      cell: (row) => <span className="text-warning">{formatMoney(row.outstanding, currency)}</span>,
     },
     { header: "Client since", accessor: (row) => row.clientSince, cell: (row) => <span className="text-muted-foreground">{formatDate(row.clientSince)}</span> },
   ]);
@@ -1025,7 +1025,7 @@ function RevenueReport({ params }: ReportProps) {
     {
       header: "Outstanding",
       accessor: (row) => toNumber(row.outstanding),
-      cell: (row) => <span className="text-amber-300">{formatMoney(row.outstanding, currency)}</span>,
+      cell: (row) => <span className="text-warning">{formatMoney(row.outstanding, currency)}</span>,
     },
   ]);
 
@@ -1096,7 +1096,7 @@ function ExpensesReport({ params }: ReportProps) {
     {
       header: "Total",
       accessor: (row) => toNumber(row.total),
-      cell: (row) => <span className="text-rose-300">{formatMoney(row.total, currency)}</span>,
+      cell: (row) => <span className="text-danger">{formatMoney(row.total, currency)}</span>,
     },
   ]);
 
@@ -1214,7 +1214,7 @@ export default function Reports() {
           </div>
 
           {active.dateRange || active.acceptsCurrency ? (
-            <FilterBar className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+            <FilterBar className="rounded-xl border border-border bg-muted/25 p-3">
               {active.dateRange ? (
                 <>
                   <div className="flex items-center gap-2">

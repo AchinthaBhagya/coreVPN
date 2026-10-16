@@ -93,7 +93,7 @@ const COLUMNS: ColumnDef<Quotation, unknown>[] = [
         isOverdue(row.original.validUntil) &&
         ["DRAFT", "SENT"].includes(row.original.status);
       return (
-        <span className={expired ? "text-rose-300" : "text-muted-foreground"}>
+        <span className={expired ? "text-danger" : "text-muted-foreground"}>
           {formatDate(row.original.validUntil)}
         </span>
       );
@@ -398,7 +398,7 @@ function NewQuotationDialog({
             />
           </div>
 
-          <div className="space-y-3 border-t border-white/10 pt-4">
+          <div className="space-y-3 border-t border-border pt-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <p className="text-sm font-medium text-foreground">Line items</p>
@@ -420,7 +420,7 @@ function NewQuotationDialog({
               return (
                 <div
                   key={row.key}
-                  className="grid gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-3 sm:grid-cols-12"
+                  className="grid gap-3 rounded-lg border border-border bg-muted/20 p-3 sm:grid-cols-12"
                 >
                   <div className="sm:col-span-5">
                     <ItemField label="Description" error={errors?.description}>
@@ -485,14 +485,14 @@ function NewQuotationDialog({
             })}
           </div>
 
-          <div className="flex flex-col gap-4 border-t border-white/10 pt-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-1 text-sm text-muted-foreground">
               <p>
                 {rows.length} line item{rows.length === 1 ? "" : "s"}
               </p>
               <p className="text-xs">Totals are recalculated live from the rows above.</p>
             </div>
-            <div className="w-full space-y-1.5 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-sm sm:w-72">
+            <div className="w-full space-y-1.5 rounded-lg border border-border bg-muted/20 p-3 text-sm sm:w-72">
               <div className="flex justify-between gap-3">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>{formatMoney(totals.subtotal, currencyCode)}</span>
@@ -505,14 +505,14 @@ function NewQuotationDialog({
                 <span className="text-muted-foreground">Tax ({toNumber(taxRate)}%)</span>
                 <span>{formatMoney(totals.taxTotal, currencyCode)}</span>
               </div>
-              <div className="flex justify-between gap-3 border-t border-white/10 pt-1.5 font-medium">
+              <div className="flex justify-between gap-3 border-t border-border pt-1.5 font-medium">
                 <span>Total</span>
                 <span>{formatMoney(totals.total, currencyCode)}</span>
               </div>
             </div>
           </div>
 
-          <DialogFooter className="gap-2 border-t border-white/10 pt-4">
+          <DialogFooter className="gap-2 border-t border-border pt-4">
             <Button type="button" variant="outline" onClick={onClose} disabled={mutation.isPending}>
               Cancel
             </Button>

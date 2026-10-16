@@ -164,7 +164,7 @@ export default function PortalQuotationDetail() {
             emptyTitle="No line items"
             emptyDescription="This quotation does not break down into line items."
           >
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow>

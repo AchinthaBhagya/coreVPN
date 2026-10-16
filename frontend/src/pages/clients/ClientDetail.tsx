@@ -387,7 +387,7 @@ export default function ClientDetail() {
               ) : undefined
             }
           >
-            <ul className="divide-y divide-white/5">
+            <ul className="divide-y divide-border/70">
               {contacts.map((contact) => (
                 <li key={contact.id} className="flex flex-wrap items-start justify-between gap-3 py-3 first:pt-0 last:pb-0">
                   <div className="min-w-0 space-y-1">
@@ -416,7 +416,7 @@ export default function ClientDetail() {
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-rose-300 hover:text-rose-200"
+                        className="h-8 w-8 text-danger hover:text-danger/80"
                         title="Remove contact"
                         onClick={() => setDeletingContact(contact)}
                       >
@@ -470,7 +470,7 @@ export default function ClientDetail() {
             emptyTitle="No notes yet"
             emptyDescription="Context you record here stays with the client record."
           >
-            <ul className="divide-y divide-white/5">
+            <ul className="divide-y divide-border/70">
               {notes.map((note) => (
                 <li key={note.id} className="flex items-start justify-between gap-3 py-3 first:pt-0 last:pb-0">
                   <div className="min-w-0 space-y-1">
@@ -485,7 +485,7 @@ export default function ClientDetail() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 shrink-0 text-rose-300 hover:text-rose-200"
+                      className="h-8 w-8 shrink-0 text-danger hover:text-danger/80"
                       title="Delete note"
                       onClick={() => setDeletingNote(note)}
                     >
@@ -522,10 +522,10 @@ export default function ClientDetail() {
               {(activity.data ?? []).map((entry) => (
                 <li
                   key={entry.id}
-                  className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3"
+                  className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-border/60 bg-muted/20 p-3"
                 >
                   <div className="flex min-w-0 flex-1 items-start gap-3">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                     <div className="min-w-0 space-y-1">
                       <p className="text-sm text-foreground">{entry.summary}</p>
                       <p className="text-xs text-muted-foreground">

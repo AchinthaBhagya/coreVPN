@@ -360,7 +360,7 @@ function EditQuotationDialog({
             />
           </div>
 
-          <div className="space-y-3 border-t border-white/10 pt-4">
+          <div className="space-y-3 border-t border-border pt-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <p className="text-sm font-medium text-foreground">Line items</p>
@@ -382,7 +382,7 @@ function EditQuotationDialog({
               return (
                 <div
                   key={row.key}
-                  className="grid gap-3 rounded-lg border border-white/10 bg-white/[0.02] p-3 sm:grid-cols-12"
+                  className="grid gap-3 rounded-lg border border-border bg-muted/20 p-3 sm:grid-cols-12"
                 >
                   <div className="sm:col-span-5">
                     <ItemField label="Description" error={errors?.description}>
@@ -447,14 +447,14 @@ function EditQuotationDialog({
             })}
           </div>
 
-          <div className="flex flex-col gap-4 border-t border-white/10 pt-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-1 text-sm text-muted-foreground">
               <p>
                 {rows.length} line item{rows.length === 1 ? "" : "s"}
               </p>
               <p className="text-xs">Totals are recalculated live from the rows above.</p>
             </div>
-            <div className="w-full space-y-1.5 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-sm sm:w-72">
+            <div className="w-full space-y-1.5 rounded-lg border border-border bg-muted/20 p-3 text-sm sm:w-72">
               <div className="flex justify-between gap-3">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>{formatMoney(totals.subtotal, currencyCode)}</span>
@@ -467,14 +467,14 @@ function EditQuotationDialog({
                 <span className="text-muted-foreground">Tax ({toNumber(taxRate)}%)</span>
                 <span>{formatMoney(totals.taxTotal, currencyCode)}</span>
               </div>
-              <div className="flex justify-between gap-3 border-t border-white/10 pt-1.5 font-medium">
+              <div className="flex justify-between gap-3 border-t border-border pt-1.5 font-medium">
                 <span>Total</span>
                 <span>{formatMoney(totals.total, currencyCode)}</span>
               </div>
             </div>
           </div>
 
-          <DialogFooter className="gap-2 border-t border-white/10 pt-4">
+          <DialogFooter className="gap-2 border-t border-border pt-4">
             <Button type="button" variant="outline" onClick={onClose} disabled={mutation.isPending}>
               Cancel
             </Button>
@@ -662,7 +662,7 @@ export default function QuotationDetail() {
             emptyTitle="No line items"
             emptyDescription="This quotation has no lines yet."
           >
-            <div className="overflow-hidden rounded-xl border border-white/10">
+            <div className="overflow-hidden rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
@@ -716,7 +716,7 @@ export default function QuotationDetail() {
                 <dt className="text-muted-foreground">Tax ({toNumber(quotation.taxRate)}%)</dt>
                 <dd>{formatMoney(quotation.taxTotal, quotation.currency)}</dd>
               </div>
-              <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-1.5 font-semibold">
+              <div className="flex items-center justify-between gap-3 border-t border-border pt-1.5 font-semibold">
                 <dt>Total</dt>
                 <dd>{formatMoney(quotation.total, quotation.currency)}</dd>
               </div>
@@ -781,7 +781,7 @@ export default function QuotationDetail() {
                 {
                   label: "Valid until",
                   value: (
-                    <span className={expiringSoon ? "font-medium text-rose-300" : undefined}>
+                    <span className={expiringSoon ? "font-medium text-danger" : undefined}>
                       {formatDate(quotation.validUntil)}
                       {expiringSoon ? <span className="ml-1.5 text-[10px] uppercase tracking-wide">expired</span> : null}
                     </span>
@@ -827,7 +827,7 @@ export default function QuotationDetail() {
               {(quotation.orders ?? []).map((order) => (
                 <li
                   key={order.id}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/20 px-3 py-2"
                 >
                   <span className="font-mono text-xs">{order.orderNo}</span>
                   <StatusBadge status={order.status} />

@@ -23,9 +23,9 @@ export function UserMenu({ onNavigate }: { onNavigate: (path: string) => void })
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-10 gap-2 px-2">
-          <Avatar className="h-8 w-8 border border-white/10">
+          <Avatar className="h-8 w-8 border border-border">
             <AvatarImage src={user.avatarId ? `/api/attachments/${user.avatarId}` : undefined} alt={displayName} />
-            <AvatarFallback className="bg-gradient-to-br from-sky-500 to-violet-600 text-xs text-white">
+            <AvatarFallback className="gold-gradient text-xs font-semibold text-primary-foreground">
               {initials(user.firstName, user.lastName)}
             </AvatarFallback>
           </Avatar>

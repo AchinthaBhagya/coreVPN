@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 export function FullPageLoader({ label = "Preparing your workspace..." }: { label?: string }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#05070d] text-muted-foreground">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 shadow-lg shadow-sky-500/20">
-        <Loader2 className="h-6 w-6 animate-spin text-white" />
+    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background text-muted-foreground">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl gold-gradient shadow-lg shadow-primary/20">
+        <Loader2 className="h-6 w-6 animate-spin text-primary-foreground" />
       </div>
       <p className="text-sm">{label}</p>
     </div>

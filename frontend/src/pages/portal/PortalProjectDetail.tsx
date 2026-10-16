@@ -116,7 +116,7 @@ function RevisionList({ items }: { items: RevisionRequest[] }) {
         {items.map((revision) => (
           <div
             key={revision.id}
-            className="rounded-lg border border-white/5 bg-white/[0.02] p-3"
+            className="rounded-lg border border-border/60 bg-muted/20 p-3"
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-medium">{revision.title}</p>
@@ -126,7 +126,7 @@ function RevisionList({ items }: { items: RevisionRequest[] }) {
               {revision.description}
             </p>
             {revision.response ? (
-              <div className="mt-2 rounded-md border border-white/5 bg-white/[0.03] p-2">
+              <div className="mt-2 rounded-md border border-border/60 bg-muted/25 p-2">
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Response from the team
                 </p>
@@ -235,7 +235,7 @@ function FilesTab({ projectId }: { projectId: string }) {
 
   return (
     <SectionCard title="Project files" description="Deliverables shared with your account.">
-      <ul className="divide-y divide-white/5">
+      <ul className="divide-y divide-border/70">
         {items.map((file) => (
           <li key={file.id} className="flex items-center justify-between gap-3 py-3">
             <div className="min-w-0">
@@ -400,7 +400,7 @@ export default function PortalProjectDetail() {
                 {data.checklist.map((item) => (
                   <li key={item.id} className="flex items-center gap-2 text-sm">
                     {item.isDone ? (
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-success" />
                     ) : (
                       <Circle className="h-4 w-4 shrink-0 text-muted-foreground" />
                     )}
@@ -426,7 +426,7 @@ export default function PortalProjectDetail() {
               {data.milestones.map((milestone) => (
                 <div
                   key={milestone.id}
-                  className="flex flex-col gap-2 rounded-lg border border-white/5 bg-white/[0.02] p-3 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-2 rounded-lg border border-border/60 bg-muted/20 p-3 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="min-w-0 space-y-1">
                     <p className="text-sm font-medium">{milestone.title}</p>
@@ -459,7 +459,7 @@ export default function PortalProjectDetail() {
               {data.updates.map((update) => (
                 <article
                   key={update.id}
-                  className="space-y-1.5 border-b border-white/5 pb-4 last:border-0 last:pb-0"
+                  className="space-y-1.5 border-b border-border/60 pb-4 last:border-0 last:pb-0"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h4 className="text-sm font-medium">{update.title ?? "Project update"}</h4>
@@ -488,7 +488,7 @@ export default function PortalProjectDetail() {
             <div className="space-y-3">
               {data.activity.map((entry) => (
                 <div key={entry.id} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-500" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-primary to-primary/40" />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm text-foreground">{entry.summary}</p>
                     <p className="text-xs text-muted-foreground">

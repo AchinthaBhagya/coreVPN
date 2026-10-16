@@ -97,7 +97,7 @@ const invoiceColumns: ColumnDef<Invoice, unknown>[] = [
     cell: ({ row }) => {
       const overdue = isInvoiceOverdue(row.original);
       return (
-        <span className={overdue ? "text-sm font-medium text-rose-300" : "text-sm text-muted-foreground"}>
+        <span className={overdue ? "text-sm font-medium text-danger" : "text-sm text-muted-foreground"}>
           {formatDate(row.original.dueDate)}
           {overdue ? <span className="ml-1.5 text-[10px] uppercase tracking-wide">overdue</span> : null}
         </span>
@@ -131,7 +131,7 @@ const invoiceColumns: ColumnDef<Invoice, unknown>[] = [
         <span
           className={
             overdue
-              ? "text-sm font-semibold text-rose-300"
+              ? "text-sm font-semibold text-danger"
               : settled
                 ? "text-sm text-muted-foreground"
                 : "text-sm font-medium"
@@ -361,7 +361,7 @@ function CreateInvoiceDialog({ clients, onClose }: { clients: Client[]; onClose:
               {fields.map((field, index) => {
                 const lineErrors = itemError?.[index];
                 return (
-                  <div key={field.id} className="space-y-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+                  <div key={field.id} className="space-y-3 rounded-xl border border-border bg-muted/20 p-3">
                     <div className="flex items-start gap-2">
                       <div className="min-w-0 flex-1 space-y-1.5">
                         <Label htmlFor={`line-${field.id}-description`} className="text-xs text-muted-foreground">
@@ -447,7 +447,7 @@ function CreateInvoiceDialog({ clients, onClose }: { clients: Client[]; onClose:
               <TextareaField form={form} name="terms" label="Terms (optional)" rows={3} placeholder="Payment terms and conditions" />
             </div>
 
-            <div className="space-y-1.5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="space-y-1.5 rounded-xl border border-border bg-muted/25 p-4">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>{formatMoney(totals.subtotal, currency)}</span>
@@ -460,7 +460,7 @@ function CreateInvoiceDialog({ clients, onClose }: { clients: Client[]; onClose:
                 <span className="text-muted-foreground">Tax ({toNumber(watchedTaxRate)}%)</span>
                 <span>{formatMoney(totals.taxTotal, currency)}</span>
               </div>
-              <div className="flex items-center justify-between border-t border-white/10 pt-2 text-sm font-semibold">
+              <div className="flex items-center justify-between border-t border-border pt-2 text-sm font-semibold">
                 <span>Total</span>
                 <span>{formatMoney(totals.total, currency)}</span>
               </div>
@@ -536,7 +536,7 @@ export default function InvoiceList() {
                   type="button"
                   size="sm"
                   variant={active ? "secondary" : "ghost"}
-                  className={active ? "border border-white/15 bg-white/10 text-foreground" : "text-muted-foreground"}
+                  className={active ? "border border-border bg-muted/60 text-foreground" : "text-muted-foreground"}
                   onClick={() => selectStatus(chip.value)}
                 >
                   {chip.label}
@@ -552,7 +552,7 @@ export default function InvoiceList() {
             onClick={toggleOverdue}
             className={
               overdueActive
-                ? "border-rose-500/40 bg-rose-500/10 text-rose-200 hover:bg-rose-500/15"
+                ? "border-danger/40 bg-danger/10 text-danger hover:bg-danger/15"
                 : "text-muted-foreground"
             }
           >
@@ -603,7 +603,7 @@ export default function InvoiceList() {
             isLoading={invoices.isLoading}
             onRowClick={(invoice) => navigate(`/invoices/${invoice.id}`)}
             rowClassName={(invoice) =>
-              isInvoiceOverdue(invoice) ? "bg-rose-500/[0.04] hover:bg-rose-500/[0.08]" : undefined
+              isInvoiceOverdue(invoice) ? "bg-danger/10 hover:bg-danger/15" : undefined
             }
             emptyTitle="No invoices found"
             emptyDescription="Create your first invoice to start tracking billing, payments and balances."

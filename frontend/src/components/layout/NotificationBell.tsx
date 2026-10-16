@@ -47,7 +47,7 @@ export function NotificationBell() {
         <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
           <Bell className="h-5 w-5" />
           {count > 0 ? (
-            <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-red-600 px-1 text-[10px] font-semibold text-white">
+            <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gradient-to-br from-danger to-red-600 px-1 text-[10px] font-semibold text-white">
               {count > 9 ? "9+" : count}
             </span>
           ) : null}
@@ -74,7 +74,7 @@ export function NotificationBell() {
               You're all caught up.
             </div>
           ) : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-border/70">
               {items.map((notification) => (
                 <button
                   key={notification.id}
@@ -84,11 +84,11 @@ export function NotificationBell() {
                     if (notification.link) navigate(notification.link);
                   }}
                   className={cn(
-                    "flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-white/5",
-                    !notification.isRead && "bg-sky-500/5",
+                    "flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40",
+                    !notification.isRead && "bg-primary/10",
                   )}
                 >
-                  <span className={cn("mt-1.5 h-2 w-2 shrink-0 rounded-full", notification.isRead ? "bg-white/10" : "bg-sky-400")} />
+                  <span className={cn("mt-1.5 h-2 w-2 shrink-0 rounded-full", notification.isRead ? "bg-muted/60" : "bg-primary")} />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium text-foreground">{notification.title}</span>
                     {notification.message ? (
