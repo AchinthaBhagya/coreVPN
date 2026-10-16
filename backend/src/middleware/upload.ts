@@ -81,7 +81,7 @@ export function resolveStoredFile(relativeKey: string): string {
   // storageKey is stored as <year>/<month>/<filename>
   const normalized = path.normalize(relativeKey).replace(/^([/\\])+/, '');
   const full = path.resolve(UPLOAD_ROOT, normalized);
-  if (!full.startsWith(UPLOAD_ROOT)) {
+  if (full !== UPLOAD_ROOT && !full.startsWith(UPLOAD_ROOT + path.sep)) {
     throw new AppError('Invalid file path', 400);
   }
   return full;

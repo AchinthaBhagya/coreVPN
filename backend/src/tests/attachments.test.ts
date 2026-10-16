@@ -185,6 +185,35 @@ describe('attachments - path traversal is blocked', () => {
     }
   });
 
+  it('does not serve a file from a sibling directory that shares the uploads prefix', async () => {
+    // e.g. UPLOAD_ROOT=/x/uploads and the target is /x/uploads-evil/secret.txt.
+    // A naive `full.startsWith(UPLOAD_ROOT)` check would wrongly allow this.
+    const siblingDir = `${UPLOAD_ROOT}-evil`;
+    const siblingFile = path.join(siblingDir, 'sibling-secret.txt');
+    fs.mkdirSync(siblingDir, { recursive: true });
+    fs.writeFileSync(siblingFile, 'SIBLING_SECRET_CONTENT');
+    try {
+      const evil = await prisma.attachment.create({
+        data: {
+          storageKey: `../${path.basename(UPLOAD_ROOT)}-evil/sibling-secret.txt`,
+          originalName: 'evil.txt',
+          mimeType: 'text/plain',
+          size: 21,
+          category: 'DOCUMENT',
+          uploadedById: staff.id,
+          isClientVisible: false,
+        },
+      });
+
+      const res = await uploader.get(`/attachments/${evil.id}?download=true`);
+      expect([400, 404]).toContain(res.status);
+      expect(JSON.stringify(res.body)).not.toContain('SIBLING_SECRET_CONTENT');
+    } finally {
+      if (fs.existsSync(siblingFile)) fs.unlinkSync(siblingFile);
+      if (fs.existsSync(siblingDir)) fs.rmdirSync(siblingDir);
+    }
+  });
+
   it('does not escape via a traversal in the id parameter', async () => {
     const res = await uploader.get(`/attachments/${encodeURIComponent('../../etc/passwd')}`);
     expect([400, 404]).toContain(res.status);

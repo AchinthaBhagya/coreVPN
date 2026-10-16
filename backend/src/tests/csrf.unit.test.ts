@@ -104,6 +104,32 @@ describe('csrfProtection (unit)', () => {
     }
   });
 
+  it('rejects a look-alike Origin that merely shares the allowed prefix', () => {
+    const { error } = run({
+      method: 'POST',
+      path: '/auth/login',
+      headers: { origin: 'http://localhost:5173.evil.example' },
+    });
+    expect(error).toBeInstanceOf(AppError);
+    expect(error!.statusCode).toBe(403);
+  });
+
+  it('rejects the opaque "null" Origin on an exempt path', () => {
+    const { error } = run({ method: 'POST', path: '/auth/register', headers: { origin: 'null' } });
+    expect(error).toBeInstanceOf(AppError);
+    expect(error!.statusCode).toBe(403);
+  });
+
+  it('accepts a same-origin Referer that includes a path', () => {
+    const { error, next } = run({
+      method: 'POST',
+      path: '/auth/login',
+      headers: { referer: 'http://localhost:5173/register?type=staff' },
+    });
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(error).toBeUndefined();
+  });
+
   it('accepts a request carrying an Authorization: Bearer header without a token', () => {
     const { error, next } = run({
       method: 'POST',
