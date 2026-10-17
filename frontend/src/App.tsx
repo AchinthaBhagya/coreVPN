@@ -112,7 +112,7 @@ const STAFF = {
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme="dark">
+    <ThemeProvider defaultTheme="light">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Router>
