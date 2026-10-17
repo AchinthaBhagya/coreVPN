@@ -234,6 +234,19 @@ clientsRouter.delete(
   }),
 );
 
+clientsRouter.delete(
+  '/:id/permanent',
+  requirePermission('clients.delete'),
+  validate(idParamSchema, 'params'),
+  ah(async (req: AuthRequest, res) => {
+    const existing = await prisma.client.findFirst({ where: { id: req.params.id } });
+    if (!existing) throw new AppError('Client not found', 404);
+    await prisma.client.delete({ where: { id: existing.id } });
+    await writeAudit(req, { action: 'client.delete', module: 'clients', entityId: existing.id });
+    return sendNoContent(res);
+  }),
+);
+
 /* --------------------------------- Contacts -------------------------------- */
 
 clientsRouter.post(

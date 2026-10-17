@@ -176,6 +176,7 @@ export default function ClientDetail() {
   const [tab, setTab] = useState("overview");
   const [editOpen, setEditOpen] = useState(false);
   const [archiveOpen, setArchiveOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [editingContact, setEditingContact] = useState<ClientContact | null>(null);
   const [deletingContact, setDeletingContact] = useState<ClientContact | null>(null);
@@ -203,6 +204,15 @@ export default function ClientDetail() {
     mutationFn: () => api.del<void>(`/clients/${id}`),
     onSuccess: () => {
       toastSuccess("Client archived", "The client was moved out of the active list.");
+      navigate("/clients");
+    },
+    onError: (error) => toastError(error),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => api.del<void>(`/clients/${id}/permanent`),
+    onSuccess: () => {
+      toastSuccess("Client deleted", "The client has been permanently deleted.");
       navigate("/clients");
     },
     onError: (error) => toastError(error),
@@ -308,10 +318,16 @@ export default function ClientDetail() {
               </Button>
             ) : null}
             {can("clients.delete") ? (
-              <Button type="button" variant="destructive" onClick={() => setArchiveOpen(true)}>
-                <Archive className="h-4 w-4" />
-                Archive
-              </Button>
+              <>
+                <Button type="button" variant="outline" onClick={() => setArchiveOpen(true)}>
+                  <Archive className="h-4 w-4" />
+                  Archive
+                </Button>
+                <Button type="button" variant="destructive" onClick={() => setDeleteOpen(true)}>
+                  <Trash2 className="h-4 w-4" />
+                  Delete permanently
+                </Button>
+              </>
             ) : null}
           </>
         }
@@ -565,6 +581,17 @@ export default function ClientDetail() {
         destructive
         loading={archiveMutation.isPending}
         onConfirm={() => archiveMutation.mutate()}
+      />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Delete client permanently?"
+        description={`${clientDisplayName(client)} will be permanently deleted. This action cannot be undone.`}
+        confirmLabel="Delete permanently"
+        destructive
+        loading={deleteMutation.isPending}
+        onConfirm={() => deleteMutation.mutate()}
       />
 
       <ConfirmDialog

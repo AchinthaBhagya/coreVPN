@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Archive, FileDown, Loader2, Pencil, Plus } from "lucide-react";
+import { Archive, FileDown, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { api, downloadBlob } from "@/lib/api";
 import { qk } from "@/lib/queryClient";
@@ -308,6 +308,7 @@ export default function ClientList() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Client | null>(null);
   const [archiving, setArchiving] = useState<Client | null>(null);
+  const [deleting, setDeleting] = useState<Client | null>(null);
 
   const hasFilters =
     params.search.trim() !== "" || params.filters.status !== "ALL" || params.filters.type !== "ALL";
@@ -332,6 +333,18 @@ export default function ClientList() {
     onSuccess: () => {
       toastSuccess("Client archived", "The client was moved out of the active list.");
       setArchiving(null);
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+    },
+    onError: (error) => {
+      toastError(error);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (clientId: string) => api.del<void>(`/clients/${clientId}/permanent`),
+    onSuccess: () => {
+      toastSuccess("Client deleted", "The client has been permanently deleted.");
+      setDeleting(null);
       queryClient.invalidateQueries({ queryKey: ["clients"] });
     },
     onError: (error) => {
@@ -418,16 +431,28 @@ export default function ClientList() {
             </Button>
           ) : null}
           {can("clients.delete") ? (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-danger hover:text-danger/80"
-              title="Archive client"
-              onClick={() => setArchiving(row.original)}
-            >
-              <Archive className="h-4 w-4" />
-            </Button>
+            <>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-warning hover:text-warning/80"
+                title="Archive client"
+                onClick={() => setArchiving(row.original)}
+              >
+                <Archive className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-danger hover:text-danger/80"
+                title="Delete client permanently"
+                onClick={() => setDeleting(row.original)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </>
           ) : null}
         </div>
       ),
@@ -546,6 +571,25 @@ export default function ClientList() {
         loading={archiveMutation.isPending}
         onConfirm={() => {
           if (archiving) archiveMutation.mutate(archiving.id);
+        }}
+      />
+
+      <ConfirmDialog
+        open={Boolean(deleting)}
+        onOpenChange={(open) => {
+          if (!open) setDeleting(null);
+        }}
+        title="Delete client permanently?"
+        description={
+          deleting
+            ? `${clientDisplayName(deleting)} will be permanently deleted. This action cannot be undone.`
+            : undefined
+        }
+        confirmLabel="Delete permanently"
+        destructive
+        loading={deleteMutation.isPending}
+        onConfirm={() => {
+          if (deleting) deleteMutation.mutate(deleting.id);
         }}
       />
     </div>
