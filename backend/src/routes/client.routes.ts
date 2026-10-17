@@ -239,9 +239,55 @@ clientsRouter.delete(
   requirePermission('clients.delete'),
   validate(idParamSchema, 'params'),
   ah(async (req: AuthRequest, res) => {
-    const existing = await prisma.client.findFirst({ where: { id: req.params.id } });
+    const existing = await prisma.client.findFirst({
+      where: { id: req.params.id },
+      include: {
+        _count: {
+          select: {
+            projects: true,
+            invoices: true,
+            quotations: true,
+            orders: true,
+            payments: true,
+            refunds: true,
+            tickets: true,
+            attachments: true,
+            activities: true,
+          },
+        },
+      },
+    });
     if (!existing) throw new AppError('Client not found', 404);
-    await prisma.client.delete({ where: { id: existing.id } });
+
+    await prisma.$transaction(async (tx) => {
+      // Delete related records first to avoid FK constraints
+      await tx.clientContact.deleteMany({ where: { clientId: existing.id } });
+      await tx.clientNote.deleteMany({ where: { clientId: existing.id } });
+      await tx.projectMember.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.milestone.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.task.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.projectUpdate.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.revisionRequest.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.timeEntry.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.checklistItem.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.memberEarning.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.allocationRule.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.expense.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.project.deleteMany({ where: { clientId: existing.id } });
+      await tx.quotationItem.deleteMany({ where: { quotation: { clientId: existing.id } } });
+      await tx.quotation.deleteMany({ where: { clientId: existing.id } });
+      await tx.order.deleteMany({ where: { clientId: existing.id } });
+      await tx.invoiceItem.deleteMany({ where: { invoice: { clientId: existing.id } } });
+      await tx.invoice.deleteMany({ where: { clientId: existing.id } });
+      await tx.payment.deleteMany({ where: { clientId: existing.id } });
+      await tx.refund.deleteMany({ where: { clientId: existing.id } });
+      await tx.ticketMessage.deleteMany({ where: { ticket: { clientId: existing.id } } });
+      await tx.ticketAssignment.deleteMany({ where: { ticket: { clientId: existing.id } } });
+      await tx.ticket.deleteMany({ where: { clientId: existing.id } });
+      await tx.attachment.deleteMany({ where: { clientId: existing.id } });
+      await tx.activityLog.deleteMany({ where: { clientId: existing.id } });
+      await tx.client.delete({ where: { id: existing.id } });
+    });
     await writeAudit(req, { action: 'client.delete', module: 'clients', entityId: existing.id });
     return sendNoContent(res);
   }),
