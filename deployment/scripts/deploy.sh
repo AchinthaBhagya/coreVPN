@@ -21,8 +21,14 @@ if [[ -d .git ]]; then
   git fetch --all --prune
   if [[ -n "$REF" ]]; then
     git checkout "$REF"
+    git reset --hard "$REF"
+  else
+    # Mirror the remote branch exactly. `git pull --ff-only` can be blocked by
+    # stray build artifacts left on the server (e.g. *.tsbuildinfo), which would
+    # silently deploy stale code - so reset instead and let `set -e` fail loudly.
+    BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    git reset --hard "origin/${BRANCH}"
   fi
-  git pull --ff-only || true
 fi
 
 run() {
