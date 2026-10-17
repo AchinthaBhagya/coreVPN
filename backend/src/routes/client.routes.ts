@@ -265,6 +265,7 @@ clientsRouter.delete(
       await tx.clientNote.deleteMany({ where: { clientId: existing.id } });
       await tx.projectMember.deleteMany({ where: { project: { clientId: existing.id } } });
       await tx.milestone.deleteMany({ where: { project: { clientId: existing.id } } });
+      await tx.taskComment.deleteMany({ where: { task: { project: { clientId: existing.id } } } });
       await tx.task.deleteMany({ where: { project: { clientId: existing.id } } });
       await tx.projectUpdate.deleteMany({ where: { project: { clientId: existing.id } } });
       await tx.revisionRequest.deleteMany({ where: { project: { clientId: existing.id } } });
@@ -278,10 +279,9 @@ clientsRouter.delete(
       await tx.quotation.deleteMany({ where: { clientId: existing.id } });
       await tx.order.deleteMany({ where: { clientId: existing.id } });
       await tx.invoiceItem.deleteMany({ where: { invoice: { clientId: existing.id } } });
-      await tx.invoice.deleteMany({ where: { clientId: existing.id } });
-      await tx.payment.deleteMany({ where: { clientId: existing.id } });
       await tx.refund.deleteMany({ where: { clientId: existing.id } });
-      await tx.ticketMessage.deleteMany({ where: { ticket: { clientId: existing.id } } });
+      await tx.payment.deleteMany({ where: { clientId: existing.id } });
+      await tx.invoice.deleteMany({ where: { clientId: existing.id } });
       await tx.ticketMessage.deleteMany({ where: { ticket: { clientId: existing.id } } });
       await tx.ticket.deleteMany({ where: { clientId: existing.id } });
       await tx.attachment.deleteMany({ where: { clientId: existing.id } });
