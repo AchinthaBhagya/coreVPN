@@ -37,15 +37,15 @@ export function useChartTheme(): ChartTheme {
   const { resolvedTheme } = useTheme();
 
   return useMemo<ChartTheme>(() => {
-    const primary = readVar("--primary", "hsl(258 90% 68%)");
-    const info = readVar("--info", "hsl(192 92% 60%)");
-    const success = readVar("--success", "hsl(158 72% 48%)");
+    const primary = readVar("--primary", "hsl(158 72% 52%)");
+    const info = readVar("--info", "hsl(188 90% 60%)");
+    const success = readVar("--success", "hsl(150 70% 52%)");
     const warning = readVar("--warning", "hsl(38 94% 62%)");
     const destructive = readVar("--destructive", "hsl(350 86% 64%)");
-    const foreground = readVar("--foreground", "hsl(225 30% 96%)");
-    const mutedForeground = readVar("--muted-foreground", "hsl(230 16% 68%)");
-    const border = readVar("--border", "hsl(240 20% 18%)");
-    const popover = readVar("--popover", "hsl(240 28% 9%)");
+    const foreground = readVar("--foreground", "hsl(155 22% 95%)");
+    const mutedForeground = readVar("--muted-foreground", "hsl(160 14% 68%)");
+    const border = readVar("--border", "hsl(168 18% 18%)");
+    const popover = readVar("--popover", "hsl(168 28% 9%)");
 
     return {
       series: { revenue: primary, cash: success, expenses: destructive },

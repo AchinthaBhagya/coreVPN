@@ -204,7 +204,7 @@ export default function DashboardPage() {
             ) : (
               data.recent.activities.slice(0, 7).map((entry) => (
                 <div key={entry.id} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-aurora-cyan to-aurora-violet" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-aurora-cyan to-aurora-emerald" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-foreground">{entry.summary}</p>
                     <p className="text-xs text-muted-foreground">

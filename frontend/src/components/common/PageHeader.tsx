@@ -25,7 +25,7 @@ export function PageHeader({
       <div className="min-w-0 space-y-1.5">
         {breadcrumb ? <div className="text-xs text-muted-foreground">{breadcrumb}</div> : null}
         <div className="flex items-center gap-2.5">
-          <span className="hidden h-6 w-1 rounded-full bg-gradient-to-b from-aurora-cyan via-primary to-aurora-violet sm:block" />
+          <span className="hidden h-6 w-1 rounded-full bg-gradient-to-b from-aurora-cyan via-primary to-aurora-emerald sm:block" />
           <h1 className="truncate font-display text-2xl font-semibold tracking-tight text-foreground">{title}</h1>
         </div>
         {description ? <p className="max-w-2xl text-sm text-muted-foreground">{description}</p> : null}

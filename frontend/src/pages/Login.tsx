@@ -98,7 +98,7 @@ export default function Login() {
 
       <div className="aurora-frame glass-strong sheen relative grid w-full max-w-5xl overflow-hidden rounded-3xl lg:grid-cols-2">
         <div className="relative hidden flex-col justify-between gap-8 overflow-hidden border-r border-border/50 bg-gradient-to-br from-primary/15 via-transparent to-aurora-cyan/10 p-10 lg:flex">
-          <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-aurora-violet/25 blur-[90px]" />
+          <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-aurora-emerald/25 blur-[90px]" />
           <div className="relative flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0b0b16] ring-1 ring-primary/40 shadow-[0_0_22px_-6px_hsl(var(--primary)/0.7)]">
               <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
@@ -119,7 +119,7 @@ export default function Login() {
           <ul className="relative space-y-2 text-sm text-muted-foreground">
             {["Role-based access on every endpoint", "Transparent profit allocation & payouts", "Client portal with secure file delivery"].map((line) => (
               <li key={line} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-aurora-cyan to-aurora-violet" />
+                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-aurora-cyan to-aurora-emerald" />
                 {line}
               </li>
             ))}

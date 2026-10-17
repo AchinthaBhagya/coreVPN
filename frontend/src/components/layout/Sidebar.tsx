@@ -79,7 +79,7 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
                         {isActive ? (
                           <motion.span
                             layoutId={`nav-active-${variant}`}
-                            className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-gradient-to-b from-aurora-cyan via-primary to-aurora-violet"
+                            className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-gradient-to-b from-aurora-cyan via-primary to-aurora-emerald"
                           />
                         ) : null}
                         <item.icon

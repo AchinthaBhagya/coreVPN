@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export function FullPageLoader({ label = "Preparing your workspace..." }: { label?: string }) {
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center gap-3 overflow-hidden bg-background text-muted-foreground">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-aurora-violet/25 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-aurora-emerald/25 blur-[100px]" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-aurora-cyan/20 blur-[100px]" />
       <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl aurora-gradient shadow-[0_16px_40px_-16px_hsl(var(--primary)/0.8)]">
         <Loader2 className="h-6 w-6 animate-spin text-primary-foreground" />

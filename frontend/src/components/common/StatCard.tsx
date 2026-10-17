@@ -22,7 +22,7 @@ export function StatCard({
   className?: string;
 }) {
   const toneRing: Record<string, string> = {
-    primary: "from-aurora-violet/25 via-primary/10 to-transparent text-primary",
+    primary: "from-aurora-emerald/25 via-primary/10 to-transparent text-primary",
     success: "from-success/25 to-transparent text-success",
     warning: "from-warning/25 to-transparent text-warning",
     danger: "from-destructive/25 to-transparent text-destructive",

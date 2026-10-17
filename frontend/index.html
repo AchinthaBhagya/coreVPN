@@ -1,28 +1,29 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <script>
       // Apply the stored theme before first paint to avoid a flash of the
-      // wrong theme. Mirrors the logic in src/context/ThemeContext.tsx.
+      // wrong theme. Light is the default for new visitors; mirrors the logic
+      // in src/context/ThemeContext.tsx.
       (function () {
         try {
-          var stored = localStorage.getItem('theme') || 'dark';
+          var stored = localStorage.getItem('theme') || 'light';
           var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
           var dark = stored === 'dark' || (stored === 'system' && prefersDark);
           var root = document.documentElement;
           root.classList.toggle('dark', dark);
           root.style.colorScheme = dark ? 'dark' : 'light';
         } catch (e) {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('dark');
         }
       })();
     </script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0a14" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f6f6fe" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#06110d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2fbf7" media="(prefers-color-scheme: light)" />
     <title>3xCodz Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

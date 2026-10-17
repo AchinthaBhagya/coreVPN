@@ -78,8 +78,8 @@ export default {
           1: "hsl(var(--aurora-1))",
           2: "hsl(var(--aurora-2))",
           3: "hsl(var(--aurora-3))",
-          violet: "hsl(var(--aurora-1))",
-          indigo: "hsl(var(--aurora-2))",
+          emerald: "hsl(var(--aurora-1))",
+          teal: "hsl(var(--aurora-2))",
           cyan: "hsl(var(--aurora-3))",
         },
         chart: {
@@ -146,7 +146,7 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'aurora-gradient': 'linear-gradient(120deg, hsl(var(--aurora-2)) 0%, hsl(var(--aurora-1)) 52%, hsl(var(--aurora-3)) 100%)',
+        'aurora-gradient': 'linear-gradient(120deg, hsl(var(--aurora-1)) 0%, hsl(var(--aurora-2)) 52%, hsl(var(--aurora-3)) 100%)',
         'aurora-sheen': 'linear-gradient(90deg, transparent, hsl(var(--aurora-1) / 0.55), hsl(var(--aurora-3) / 0.45), transparent)',
       },
     },
