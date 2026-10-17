@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { api, ApiError } from "@/lib/api";
 import { passwordPolicy, passwordSchema } from "@/lib/validation";
 import { fieldErrors } from "@/lib/errors";
+import { AuroraBackdrop } from "@/components/common/AuroraBackdrop";
 import { GoogleMark } from "@/components/common/GoogleMark";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { toast } from "@/hooks/use-toast";
@@ -110,27 +111,24 @@ export default function Register() {
   const googleHref = `/api/auth/google?type=${accountType}`;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+    <div className="isolate relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <AuroraBackdrop />
       <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
-      </div>
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl glass sheen p-8 sm:p-10"
+        className="aurora-frame glass-strong sheen relative w-full max-w-lg overflow-hidden rounded-3xl p-8 sm:p-10"
       >
         <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-border">
+          <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0b0b16] ring-1 ring-primary/40 shadow-[0_0_22px_-6px_hsl(var(--primary)/0.7)]">
             <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
           </div>
           <div>
-            <p className="text-lg font-semibold tracking-tight">Create your account</p>
+            <p className="font-display text-lg font-semibold tracking-tight">Create your account</p>
             <p className="text-xs text-muted-foreground">3xCodz Management System</p>
           </div>
         </div>
@@ -169,11 +167,11 @@ export default function Register() {
                     onClick={() => setAccountType(type.value)}
                     className={`rounded-2xl border p-3 text-left transition ${
                       active
-                        ? "border-primary/50 bg-info/10 ring-1 ring-primary/40"
-                        : "border-border bg-muted/20 hover:border-border"
+                        ? "border-primary/50 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent ring-1 ring-primary/40"
+                        : "border-border/70 bg-muted/20 hover:border-primary/30"
                     }`}
                   >
-                    <Icon className={`mb-2 h-4 w-4 ${active ? "text-info" : "text-muted-foreground"}`} />
+                    <Icon className={`mb-2 h-4 w-4 ${active ? "text-primary" : "text-muted-foreground"}`} />
                     <p className="text-sm font-medium">{type.title}</p>
                     <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">{type.description}</p>
                   </button>

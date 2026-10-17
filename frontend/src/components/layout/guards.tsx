@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 export function FullPageLoader({ label = "Preparing your workspace..." }: { label?: string }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background text-muted-foreground">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl gold-gradient shadow-lg shadow-primary/20">
+    <div className="relative flex min-h-screen flex-col items-center justify-center gap-3 overflow-hidden bg-background text-muted-foreground">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-aurora-violet/25 blur-[100px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-aurora-cyan/20 blur-[100px]" />
+      <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl aurora-gradient shadow-[0_16px_40px_-16px_hsl(var(--primary)/0.8)]">
         <Loader2 className="h-6 w-6 animate-spin text-primary-foreground" />
       </div>
-      <p className="text-sm">{label}</p>
+      <p className="relative text-sm">{label}</p>
     </div>
   );
 }
@@ -25,7 +27,7 @@ export function Forbidden() {
         <ShieldAlert className="h-7 w-7" />
       </div>
       <div className="space-y-1">
-        <h1 className="text-xl font-semibold">Access denied</h1>
+        <h1 className="font-display text-xl font-semibold">Access denied</h1>
         <p className="max-w-sm text-sm text-muted-foreground">
           You don't have permission to view this page. If you believe this is a mistake, contact an administrator.
         </p>

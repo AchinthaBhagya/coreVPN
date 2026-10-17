@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { api, ApiError } from "@/lib/api";
+import { AuroraBackdrop } from "@/components/common/AuroraBackdrop";
 import { GoogleMark } from "@/components/common/GoogleMark";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { toast } from "@/hooks/use-toast";
@@ -89,39 +90,36 @@ export default function Login() {
   if (isBootstrapping) return <FullPageLoader />;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+    <div className="isolate relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <AuroraBackdrop />
       <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
       </div>
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
-      </div>
 
-      <div className="relative grid w-full max-w-5xl overflow-hidden rounded-3xl glass sheen lg:grid-cols-2">
-        <div className="hidden flex-col justify-between gap-8 border-r border-border bg-gradient-to-br from-primary/10 via-transparent to-amber-500/10 p-10 lg:flex">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0f0f0f] ring-1 ring-border">
+      <div className="aurora-frame glass-strong sheen relative grid w-full max-w-5xl overflow-hidden rounded-3xl lg:grid-cols-2">
+        <div className="relative hidden flex-col justify-between gap-8 overflow-hidden border-r border-border/50 bg-gradient-to-br from-primary/15 via-transparent to-aurora-cyan/10 p-10 lg:flex">
+          <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-aurora-violet/25 blur-[90px]" />
+          <div className="relative flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[#0b0b16] ring-1 ring-primary/40 shadow-[0_0_22px_-6px_hsl(var(--primary)/0.7)]">
               <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
             </div>
             <div>
-              <p className="text-lg font-semibold tracking-tight gold-text">3xCodz</p>
+              <p className="font-display text-lg font-semibold tracking-tight aurora-text">3xCodz</p>
               <p className="text-xs text-muted-foreground">Management System</p>
             </div>
           </div>
-          <div className="space-y-4">
-            <h1 className="text-3xl font-semibold leading-tight tracking-tight">
+          <div className="relative space-y-4">
+            <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight">
               Run your whole agency from one calm, secure workspace.
             </h1>
             <p className="text-sm text-muted-foreground">
               Clients, projects, delivery, finance and profit distribution - unified, permission-aware and auditable.
             </p>
           </div>
-          <ul className="space-y-2 text-sm text-muted-foreground">
+          <ul className="relative space-y-2 text-sm text-muted-foreground">
             {["Role-based access on every endpoint", "Transparent profit allocation & payouts", "Client portal with secure file delivery"].map((line) => (
               <li key={line} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-primary to-primary/40" />
+                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-aurora-cyan to-aurora-violet" />
                 {line}
               </li>
             ))}
@@ -130,7 +128,7 @@ export default function Login() {
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="p-8 sm:p-10">
           <div className="mb-8 space-y-2">
-            <h2 className="text-2xl font-semibold tracking-tight">Sign in</h2>
+            <h2 className="font-display text-2xl font-semibold tracking-tight">Sign in</h2>
             <p className="text-sm text-muted-foreground">Use your work email and password to continue.</p>
           </div>
 

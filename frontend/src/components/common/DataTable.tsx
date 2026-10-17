@@ -54,7 +54,7 @@ export function DataTable<TData>({
   }
 
   return (
-    <div className={cn("overflow-hidden rounded-xl border border-border", className)}>
+    <div className={cn("overflow-hidden rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xl", className)}>
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>

@@ -41,7 +41,7 @@ export function DetailHeader({
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0 space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1>
+            <h1 className="truncate font-display text-2xl font-semibold tracking-tight text-foreground">{title}</h1>
             {badge}
           </div>
           {subtitle ? <div className="text-sm text-muted-foreground">{subtitle}</div> : null}

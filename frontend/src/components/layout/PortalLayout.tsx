@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { AuroraBackdrop } from "@/components/common/AuroraBackdrop";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { UserMenu } from "@/components/layout/UserMenu";
@@ -18,11 +19,8 @@ export function PortalLayout() {
   const { user } = useAuth();
 
   return (
-    <div className="relative flex min-h-screen bg-background text-foreground">
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
-      </div>
+    <div className="isolate relative flex min-h-screen bg-background text-foreground">
+      <AuroraBackdrop />
 
       <div className="hidden lg:block">
         <div className="sticky top-0 h-screen">
@@ -31,7 +29,7 @@ export function PortalLayout() {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/70 px-4 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/60 bg-background/60 px-4 backdrop-blur-2xl">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden">
@@ -43,7 +41,9 @@ export function PortalLayout() {
             </SheetContent>
           </Sheet>
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium">{user?.firstName ? `${user.firstName}'s portal` : "Client portal"}</p>
+            <p className="truncate font-display text-sm font-semibold">
+              {user?.firstName ? `${user.firstName}'s portal` : "Client portal"}
+            </p>
             <p className="text-xs text-muted-foreground">Projects, invoices and support</p>
           </div>
           <div className="ml-auto flex items-center gap-1">
@@ -52,14 +52,14 @@ export function PortalLayout() {
             <UserMenu onNavigate={(path) => navigate(path)} />
           </div>
         </header>
-        <main className="flex-1 px-4 py-6 md:px-8">
+        <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               className="mx-auto w-full max-w-[1200px]"
             >
               <Outlet />

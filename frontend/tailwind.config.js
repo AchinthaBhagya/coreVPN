@@ -19,6 +19,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+        display: ['Sora', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -72,6 +73,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Aurora palette: the three stops that light the whole product.
+        aurora: {
+          1: "hsl(var(--aurora-1))",
+          2: "hsl(var(--aurora-2))",
+          3: "hsl(var(--aurora-3))",
+          violet: "hsl(var(--aurora-1))",
+          indigo: "hsl(var(--aurora-2))",
+          cyan: "hsl(var(--aurora-3))",
+        },
         chart: {
           1: "hsl(var(--chart-1))",
           2: "hsl(var(--chart-2))",
@@ -82,13 +92,15 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 6px)",
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 8px)",
       },
       boxShadow: {
         glass: "var(--glass-shadow)",
-        glow: "0 0 0 1px hsl(var(--primary) / 0.25), 0 10px 34px -10px hsl(var(--primary) / 0.5)",
-        gold: "0 10px 30px -12px hsl(var(--primary) / 0.55)",
+        glow: "0 0 0 1px hsl(var(--primary) / 0.22), 0 16px 48px -16px hsl(var(--primary) / 0.55)",
+        aurora: "0 18px 50px -20px hsl(var(--aurora-1) / 0.6), 0 8px 24px -12px hsl(var(--aurora-3) / 0.4)",
       },
       keyframes: {
         "accordion-down": {
@@ -112,8 +124,12 @@ export default {
           "100%": { transform: "translateX(0)" },
         },
         "glow-pulse": {
-          "0%, 100%": { opacity: "0.55" },
+          "0%, 100%": { opacity: "0.5" },
           "50%": { opacity: "1" },
+        },
+        "aurora-pan": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
       },
       animation: {
@@ -123,14 +139,15 @@ export default {
         "fade-up": "fade-up 0.2s ease-out",
         "slide-in-right": "slide-in-right 0.2s ease-out",
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "aurora-pan": "aurora-pan 8s ease-in-out infinite",
       },
       backdropBlur: {
         'xs': '2px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gold-gradient': 'linear-gradient(135deg, hsl(48 84% 64%) 0%, hsl(43 76% 50%) 45%, hsl(34 72% 42%) 100%)',
-        'gold-sheen': 'linear-gradient(90deg, transparent, hsl(43 76% 55% / 0.5), transparent)',
+        'aurora-gradient': 'linear-gradient(120deg, hsl(var(--aurora-2)) 0%, hsl(var(--aurora-1)) 52%, hsl(var(--aurora-3)) 100%)',
+        'aurora-sheen': 'linear-gradient(90deg, transparent, hsl(var(--aurora-1) / 0.55), hsl(var(--aurora-3) / 0.45), transparent)',
       },
     },
   },

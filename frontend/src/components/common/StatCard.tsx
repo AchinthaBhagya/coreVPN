@@ -22,11 +22,11 @@ export function StatCard({
   className?: string;
 }) {
   const toneRing: Record<string, string> = {
-    primary: "from-primary/20 to-transparent text-primary",
-    success: "from-success/20 to-transparent text-success",
-    warning: "from-warning/20 to-transparent text-warning",
-    danger: "from-danger/20 to-transparent text-danger",
-    accent: "from-primary/20 to-transparent text-primary",
+    primary: "from-aurora-violet/25 via-primary/10 to-transparent text-primary",
+    success: "from-success/25 to-transparent text-success",
+    warning: "from-warning/25 to-transparent text-warning",
+    danger: "from-destructive/25 to-transparent text-destructive",
+    accent: "from-aurora-cyan/25 to-transparent text-info",
   };
 
   return (
@@ -36,12 +36,13 @@ export function StatCard({
       transition={{ duration: 0.25 }}
       className={cn("h-full", className)}
     >
-      <Card className="group relative h-full overflow-hidden">
-        <div className={cn("pointer-events-none absolute inset-0 bg-gradient-to-br opacity-70", toneRing[tone])} />
+      <Card className="group relative h-full overflow-hidden transition-colors hover:border-primary/40">
+        <div className={cn("pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80", toneRing[tone])} />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
         <CardContent className="relative flex items-start justify-between gap-3 p-5">
           <div className="min-w-0 space-y-1">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-            <p className="truncate text-2xl font-semibold tracking-tight text-foreground">{value}</p>
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">{label}</p>
+            <p className="truncate font-display text-2xl font-semibold tracking-tight text-foreground">{value}</p>
             {hint ? <div className="text-xs text-muted-foreground">{hint}</div> : null}
             {typeof change === "number" ? (
               <div
@@ -56,7 +57,7 @@ export function StatCard({
             ) : null}
           </div>
           {icon ? (
-            <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/40", toneRing[tone])}>
+            <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/60 bg-background/40", toneRing[tone])}>
               {icon}
             </div>
           ) : null}

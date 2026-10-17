@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 export function LoadingState({ label = "Loading...", className }: { label?: string; className?: string }) {
   return (
     <div className={cn("flex flex-col items-center justify-center gap-3 py-16 text-muted-foreground", className)}>
-      <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card/50">
+        <Loader2 className="h-5 w-5 animate-spin text-primary" />
+      </div>
       <p className="text-sm">{label}</p>
     </div>
   );
@@ -42,7 +44,7 @@ export function EmptyState({
 }) {
   return (
     <div className={cn("flex flex-col items-center justify-center gap-3 px-6 py-16 text-center", className)}>
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-muted/40 text-muted-foreground">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/15 to-transparent text-primary">
         {icon ?? <Inbox className="h-6 w-6" />}
       </div>
       <div className="space-y-1">

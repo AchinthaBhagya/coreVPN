@@ -30,18 +30,18 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          "flex h-full flex-col border-r border-border bg-card/80 backdrop-blur-xl transition-[width] duration-300",
+          "flex h-full flex-col border-r border-border/60 bg-card/50 backdrop-blur-2xl transition-[width] duration-300",
           compact ? "w-[72px]" : "w-64",
         )}
       >
-        <div className={cn("flex h-16 items-center gap-2 border-b border-border px-4", compact && "justify-center px-0")}>
-          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-[#0f0f0f] ring-1 ring-primary/30">
+        <div className={cn("flex h-16 items-center gap-2.5 border-b border-border/60 px-4", compact && "justify-center px-0")}>
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-[#0b0b16] ring-1 ring-primary/40 shadow-[0_0_20px_-4px_hsl(var(--primary)/0.6)]">
             <img src="/logo.png" alt="3xCodz" className="h-full w-full object-contain" />
           </div>
           {!compact ? (
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold tracking-tight">
-                <span className="gold-text">3xCodz</span>
+              <p className="truncate font-display text-sm font-semibold tracking-tight">
+                <span className="aurora-text">3xCodz</span>
                 <span className="text-muted-foreground"> Management</span>
               </p>
               <p className="truncate text-[11px] text-muted-foreground">{isClient ? "Client portal" : "Business suite"}</p>
@@ -53,7 +53,7 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
           {groups.map((group) => (
             <div key={group.label} className="space-y-1">
               {!compact ? (
-                <p className="px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70">
+                <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/60">
                   {group.label}
                 </p>
               ) : null}
@@ -66,10 +66,10 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
                     onClick={onNavigate}
                     className={({ isActive }) =>
                       cn(
-                        "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                        "group relative flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200",
                         compact && "justify-center px-0",
                         isActive
-                          ? "bg-gradient-to-r from-primary/20 to-primary/5 text-foreground"
+                          ? "bg-gradient-to-r from-primary/25 via-primary/10 to-transparent text-foreground"
                           : "text-muted-foreground hover:bg-muted/40 hover:text-foreground",
                       )
                     }
@@ -79,10 +79,15 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
                         {isActive ? (
                           <motion.span
                             layoutId={`nav-active-${variant}`}
-                            className="absolute inset-y-1 left-0 w-0.5 rounded-full bg-gradient-to-b from-primary to-amber-500"
+                            className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-gradient-to-b from-aurora-cyan via-primary to-aurora-violet"
                           />
                         ) : null}
-                        <item.icon className="h-4 w-4 shrink-0" />
+                        <item.icon
+                          className={cn(
+                            "h-4 w-4 shrink-0 transition-colors",
+                            isActive ? "text-primary" : "group-hover:text-foreground",
+                          )}
+                        />
                         {!compact ? <span className="truncate">{item.label}</span> : null}
                       </>
                     )}
@@ -102,12 +107,12 @@ export function Sidebar({ collapsed, onToggle, variant = "desktop", onNavigate }
         </nav>
 
         {variant === "desktop" ? (
-          <div className="border-t border-border p-3">
+          <div className="border-t border-border/60 p-3">
             <button
               type="button"
               onClick={onToggle}
               className={cn(
-                "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground",
+                "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground",
                 compact && "justify-center px-0",
               )}
             >

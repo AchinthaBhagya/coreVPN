@@ -19,7 +19,7 @@ export function Topbar({ onOpenCommand }: { onOpenCommand: () => void }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/70 px-4 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/60 bg-background/60 px-4 backdrop-blur-2xl">
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="lg:hidden">
@@ -36,12 +36,12 @@ export function Topbar({ onOpenCommand }: { onOpenCommand: () => void }) {
         type="button"
         onClick={onOpenCommand}
         className={cn(
-          "group flex h-10 max-w-md flex-1 items-center gap-3 rounded-lg border border-border bg-muted/40 px-3 text-sm text-muted-foreground transition-colors hover:border-border hover:bg-muted/60",
+          "group flex h-10 max-w-md flex-1 items-center gap-3 rounded-full border border-border/70 bg-muted/30 px-4 text-sm text-muted-foreground transition-all duration-200 hover:border-primary/40 hover:bg-muted/50 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
         )}
       >
-        <Search className="h-4 w-4" />
+        <Search className="h-4 w-4 transition-colors group-hover:text-primary" />
         <span className="truncate">Search or jump to...</span>
-        <kbd className="ml-auto hidden items-center gap-0.5 rounded border border-border bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium sm:inline-flex">
+        <kbd className="ml-auto hidden items-center gap-0.5 rounded-md border border-border/70 bg-background/60 px-1.5 py-0.5 text-[10px] font-medium sm:inline-flex">
           {isMac ? "⌘" : "Ctrl"} K
         </kbd>
       </button>

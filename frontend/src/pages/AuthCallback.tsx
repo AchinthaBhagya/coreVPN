@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AuroraBackdrop } from "@/components/common/AuroraBackdrop";
 import { useAuth } from "@/context/AuthContext";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
@@ -70,20 +71,17 @@ export default function AuthCallback() {
   }, []);
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+    <div className="isolate relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      <AuroraBackdrop />
       <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
-      </div>
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl" />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="relative w-full max-w-md overflow-hidden rounded-3xl glass sheen p-8 text-center"
+        className="aurora-frame glass-strong sheen relative w-full max-w-md overflow-hidden rounded-3xl p-8 text-center"
       >
         {loading && !error ? (
           <div className="space-y-4">
@@ -91,7 +89,7 @@ export default function AuthCallback() {
               <Loader2 className="h-7 w-7 animate-spin text-info" />
             </div>
             <div className="space-y-1">
-              <h1 className="text-xl font-semibold">Finishing sign-in</h1>
+              <h1 className="font-display text-xl font-semibold">Finishing sign-in</h1>
               <p className="text-sm text-muted-foreground">Just a moment...</p>
             </div>
           </div>
@@ -101,7 +99,7 @@ export default function AuthCallback() {
               <ShieldX className="h-7 w-7 text-destructive" />
             </div>
             <div className="space-y-1">
-              <h1 className="text-xl font-semibold">Sign-in not completed</h1>
+              <h1 className="font-display text-xl font-semibold">Sign-in not completed</h1>
               <p className="text-sm text-muted-foreground">{error}</p>
             </div>
             <div className="flex flex-col gap-2">

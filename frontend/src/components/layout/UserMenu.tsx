@@ -25,7 +25,7 @@ export function UserMenu({ onNavigate }: { onNavigate: (path: string) => void })
         <Button variant="ghost" className="h-10 gap-2 px-2">
           <Avatar className="h-8 w-8 border border-border">
             <AvatarImage src={user.avatarId ? `/api/attachments/${user.avatarId}` : undefined} alt={displayName} />
-            <AvatarFallback className="gold-gradient text-xs font-semibold text-primary-foreground">
+            <AvatarFallback className="aurora-gradient text-xs font-semibold text-primary-foreground">
               {initials(user.firstName, user.lastName)}
             </AvatarFallback>
           </Avatar>

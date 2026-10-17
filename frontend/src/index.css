@@ -4,103 +4,115 @@
 
 @layer base {
   /*
-   * 3xCodz design tokens - "matte black & gold".
+   * 3xCodz design tokens - "Aurora Glass".
    *
-   * Light is the default (`:root`); dark is opted in with `.dark`. Every
-   * surface is expressed through these tokens so both themes stay legible.
+   * A deep indigo canvas lit by a cyan -> indigo -> violet aurora, with
+   * frosted glass surfaces sitting on top. Light is the default (`:root`);
+   * dark is opted in with `.dark`. Every surface is expressed through these
+   * tokens so both themes stay legible and consistent.
    */
   :root {
-    /* Light: warm ivory canvas, deep metallic gold */
-    --background: 40 33% 98%;
-    --foreground: 30 12% 11%;
+    /* Light: cool porcelain canvas, electric violet */
+    --background: 240 44% 98%;
+    --foreground: 240 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 30 12% 11%;
+    --card-foreground: 240 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 12% 11%;
+    --popover-foreground: 240 30% 12%;
 
-    --primary: 43 74% 45%;
-    --primary-foreground: 32 22% 8%;
+    --primary: 258 84% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 24% 94%;
-    --secondary-foreground: 30 14% 14%;
+    --secondary: 240 34% 95%;
+    --secondary-foreground: 240 30% 16%;
 
-    --muted: 40 22% 95%;
-    --muted-foreground: 32 10% 42%;
+    --muted: 240 32% 96%;
+    --muted-foreground: 240 14% 44%;
 
-    --accent: 43 52% 90%;
-    --accent-foreground: 30 20% 12%;
+    --accent: 252 46% 94%;
+    --accent-foreground: 252 44% 22%;
 
-    --destructive: 0 68% 46%;
+    --destructive: 350 78% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 55% 32%;
-    --success-foreground: 150 60% 97%;
-    --warning: 28 88% 40%;
-    --warning-foreground: 35 90% 97%;
-    --info: 205 78% 40%;
-    --info-foreground: 205 85% 97%;
+    --success: 158 66% 34%;
+    --success-foreground: 150 60% 98%;
+    --warning: 32 88% 44%;
+    --warning-foreground: 35 90% 98%;
+    --info: 199 84% 42%;
+    --info-foreground: 200 90% 98%;
 
-    --border: 40 18% 86%;
-    --input: 40 18% 86%;
-    --ring: 43 68% 48%;
+    --border: 240 24% 89%;
+    --input: 240 24% 89%;
+    --ring: 258 84% 58%;
 
-    --radius: 0.9rem;
+    /* Aurora stops: cyan -> indigo -> violet */
+    --aurora-1: 264 82% 58%;
+    --aurora-2: 224 86% 56%;
+    --aurora-3: 190 86% 44%;
 
-    --chart-1: 43 74% 45%;
-    --chart-2: 205 78% 50%;
-    --chart-3: 152 55% 40%;
-    --chart-4: 28 88% 53%;
-    --chart-5: 340 72% 53%;
+    --radius: 1rem;
 
-    --glass-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.6) inset, 0 18px 40px -24px hsl(30 20% 20% / 0.35);
+    --chart-1: 258 84% 58%;
+    --chart-2: 212 84% 52%;
+    --chart-3: 190 80% 42%;
+    --chart-4: 32 88% 50%;
+    --chart-5: 344 78% 54%;
+
+    --glass-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.7) inset, 0 20px 45px -28px hsl(240 40% 25% / 0.4);
   }
 
   .dark {
-    /* Dark: matte black canvas, bright metallic gold */
-    --background: 36 8% 6%;
-    --foreground: 40 33% 96%;
+    /* Dark: deep indigo-black canvas, luminous aurora */
+    --background: 240 33% 5%;
+    --foreground: 225 30% 96%;
 
-    --card: 36 9% 9%;
-    --card-foreground: 40 33% 96%;
+    --card: 240 26% 8%;
+    --card-foreground: 225 30% 96%;
 
-    --popover: 36 10% 10%;
-    --popover-foreground: 40 33% 96%;
+    --popover: 240 28% 9%;
+    --popover-foreground: 225 30% 96%;
 
-    --primary: 43 76% 53%;
-    --primary-foreground: 34 30% 7%;
+    --primary: 258 90% 68%;
+    --primary-foreground: 255 45% 99%;
 
-    --secondary: 36 9% 14%;
-    --secondary-foreground: 40 30% 94%;
+    --secondary: 240 24% 14%;
+    --secondary-foreground: 225 28% 94%;
 
-    --muted: 36 9% 14%;
-    --muted-foreground: 40 14% 64%;
+    --muted: 240 22% 14%;
+    --muted-foreground: 230 16% 68%;
 
-    --accent: 40 12% 17%;
-    --accent-foreground: 40 33% 94%;
+    --accent: 245 30% 19%;
+    --accent-foreground: 225 30% 96%;
 
-    --destructive: 0 62% 52%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 350 86% 64%;
+    --destructive-foreground: 0 0% 100%;
 
-    --success: 152 45% 54%;
-    --success-foreground: 150 60% 10%;
-    --warning: 28 90% 60%;
+    --success: 158 72% 48%;
+    --success-foreground: 150 60% 8%;
+    --warning: 38 94% 62%;
     --warning-foreground: 30 90% 10%;
-    --info: 200 82% 62%;
-    --info-foreground: 205 90% 10%;
+    --info: 192 92% 60%;
+    --info-foreground: 200 90% 8%;
 
-    --border: 40 12% 17%;
-    --input: 40 12% 17%;
-    --ring: 43 76% 53%;
+    --border: 240 20% 18%;
+    --input: 240 20% 18%;
+    --ring: 258 90% 68%;
 
-    --chart-1: 43 76% 56%;
-    --chart-2: 200 82% 62%;
-    --chart-3: 152 45% 54%;
-    --chart-4: 28 90% 60%;
-    --chart-5: 340 75% 64%;
+    /* Aurora stops: cyan -> indigo -> violet */
+    --aurora-1: 270 92% 70%;
+    --aurora-2: 222 92% 64%;
+    --aurora-3: 188 92% 56%;
 
-    --glass-shadow: 0 1px 0 0 hsl(40 40% 90% / 0.06) inset, 0 22px 50px -28px hsl(0 0% 0% / 0.8);
+    --chart-1: 270 92% 70%;
+    --chart-2: 222 92% 66%;
+    --chart-3: 188 88% 56%;
+    --chart-4: 38 94% 62%;
+    --chart-5: 344 86% 68%;
+
+    --glass-shadow: 0 1px 0 0 hsl(240 60% 90% / 0.06) inset, 0 26px 55px -30px hsl(250 90% 4% / 0.9);
   }
 }
 
@@ -123,13 +135,24 @@
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
+    /* A faint aurora wash so every screen feels lit even before the backdrop mounts. */
+    background-image:
+      radial-gradient(58rem 38rem at 12% -12%, hsl(var(--primary) / 0.12), transparent 62%),
+      radial-gradient(48rem 32rem at 100% 0%, hsl(var(--info) / 0.1), transparent 58%),
+      radial-gradient(44rem 30rem at 50% 120%, hsl(var(--primary) / 0.08), transparent 60%);
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
+  h1, h2, h3, h4 {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.015em;
+  }
+
   ::selection {
-    background: hsl(var(--primary) / 0.3);
+    background: hsl(var(--primary) / 0.32);
     color: hsl(var(--foreground));
   }
 
@@ -156,49 +179,67 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(var(--primary) / 0.55);
+    background-color: hsl(var(--primary) / 0.6);
   }
 }
 
 @layer components {
   /* Frosted-glass surfaces used across the app chrome and cards. */
   .glass {
-    @apply border border-border/70 bg-card/60 backdrop-blur-xl;
+    @apply border border-border/60 bg-card/60 backdrop-blur-xl;
     box-shadow: var(--glass-shadow);
   }
 
   .glass-strong {
-    @apply border border-border/80 bg-card/85 backdrop-blur-2xl;
+    @apply border border-border/70 bg-card/80 backdrop-blur-2xl;
     box-shadow: var(--glass-shadow);
   }
 
   .glass-subtle {
-    @apply border border-border/50 bg-card/40 backdrop-blur-md;
+    @apply border border-border/40 bg-card/40 backdrop-blur-md;
   }
 
   /* A recessed, slightly translucent panel for inner content blocks. */
   .surface {
-    @apply rounded-xl border border-border/60 bg-muted/25;
+    @apply rounded-2xl border border-border/50 bg-muted/25;
   }
 
-  /* Gold flourishes */
-  .gold-gradient {
-    background-image: linear-gradient(135deg, hsl(48 84% 64%) 0%, hsl(43 76% 50%) 45%, hsl(34 72% 42%) 100%);
+  /* Aurora flourishes */
+  .aurora-gradient {
+    background-image: linear-gradient(120deg, hsl(var(--aurora-2)) 0%, hsl(var(--aurora-1)) 52%, hsl(var(--aurora-3)) 100%);
   }
 
-  .gold-text {
-    background-image: linear-gradient(120deg, hsl(48 88% 68%) 0%, hsl(43 76% 52%) 55%, hsl(36 68% 46%) 100%);
+  .aurora-text {
+    background-image: linear-gradient(100deg, hsl(var(--aurora-3)) 0%, hsl(var(--aurora-1)) 52%, hsl(var(--aurora-2)) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  .gold-hairline {
-    background-image: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
+  .aurora-hairline {
+    background-image: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.65), hsl(var(--info) / 0.55), transparent);
   }
 
-  .glow-gold {
-    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.25), 0 10px 34px -10px hsl(var(--primary) / 0.5);
+  .glow-aurora {
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.22), 0 16px 48px -16px hsl(var(--primary) / 0.55);
+  }
+
+  /* Gradient border via a masked ring - keeps the interior untouched. */
+  .aurora-frame {
+    position: relative;
+  }
+  .aurora-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--aurora-3) / 0.7), hsl(var(--aurora-1) / 0.6), transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   /* Shimmering top highlight for premium cards. */
@@ -211,9 +252,19 @@
     position: absolute;
     inset: 0 0 auto 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55), transparent);
-    opacity: 0.7;
+    background: linear-gradient(90deg, transparent, hsl(var(--aurora-1) / 0.7), hsl(var(--aurora-3) / 0.6), transparent);
+    opacity: 0.75;
     pointer-events: none;
+  }
+
+  /* Faint grid used behind hero / empty areas. */
+  .canvas-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse at center, #000 0%, transparent 72%);
   }
 }
 
@@ -237,5 +288,35 @@
   .animate-shimmer {
     background-size: 200% 100%;
     animation: shimmer 2.4s linear infinite;
+  }
+
+  @keyframes aurora-drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(3%, -4%, 0) scale(1.08);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+  .animate-aurora-drift {
+    animation: aurora-drift 22s ease-in-out infinite;
+  }
+
+  @keyframes aurora-drift-slow {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+    50% {
+      transform: translate3d(-4%, 3%, 0) scale(1);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+  }
+  .animate-aurora-drift-slow {
+    animation: aurora-drift-slow 30s ease-in-out infinite;
   }
 }
