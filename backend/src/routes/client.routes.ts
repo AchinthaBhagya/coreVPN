@@ -282,7 +282,7 @@ clientsRouter.delete(
       await tx.payment.deleteMany({ where: { clientId: existing.id } });
       await tx.refund.deleteMany({ where: { clientId: existing.id } });
       await tx.ticketMessage.deleteMany({ where: { ticket: { clientId: existing.id } } });
-      await tx.ticketAssignment.deleteMany({ where: { ticket: { clientId: existing.id } } });
+      await tx.ticketMessage.deleteMany({ where: { ticket: { clientId: existing.id } } });
       await tx.ticket.deleteMany({ where: { clientId: existing.id } });
       await tx.attachment.deleteMany({ where: { clientId: existing.id } });
       await tx.activityLog.deleteMany({ where: { clientId: existing.id } });
